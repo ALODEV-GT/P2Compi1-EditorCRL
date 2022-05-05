@@ -1,0 +1,24 @@
+<div class="titulo">
+    IDE CRL
+</div>
+
+<ng-container *ngIf="this.proyectos.length == 0; else elseTemplate">
+    <div class="nuevo">
+        <button mat-menu-item class="boton" (click)="nuevo()">
+            Empezar
+        </button>
+    </div>
+</ng-container>
+
+<ng-template #elseTemplate>
+    <div class="editor">
+        <mat-tab-group>
+            <div *ngFor="let proyecto of proyectos; let i=index">
+                <mat-tab label="Proyecto {{this.proyectos[i].idVentana}}">
+                    <app-editor-completo [proyecto]="proyectos[i]" [proyectos]="proyectos" [numVentana]="i" [contadorVentanas]="contadorVentanas">
+                    </app-editor-completo>
+                </mat-tab>
+            </div>
+        </mat-tab-group>
+    </div>
+</ng-template>

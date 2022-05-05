@@ -1,0 +1,21 @@
+.titulo{
+    font-size: 50px;
+    color: rgb(209, 209, 209);
+    text-align: center;
+    padding: 50px;
+}
+
+.editor{
+    margin-left: 8%;
+    margin-right: 8%;
+    border-radius: 5px;
+    border-top: 2px solid rgb(58, 56, 55);
+}
+
+.nuevo{
+    text-align: center;
+}
+
+.boton{
+    font-size: 50px;
+}

@@ -1,0 +1,45 @@
+<span class="boton">
+    <button mat-icon-button [matMenuTriggerFor]="archivo">
+        Archivo
+    </button>
+</span>
+<span class="boton">
+    <button mat-icon-button [matMenuTriggerFor]="ejecucion">
+        Ejecucion
+    </button>
+</span>
+
+<input class="invisible" type="file" accept=".crl" (change)="basicUploadSingle($event)" #fileInput />
+
+<mat-menu #archivo="matMenu">
+    <button mat-menu-item class="menu" (click)='agregarVentana()'>
+        Nuevo
+    </button>
+    <button mat-menu-item class="menu" (click)="fileInput.click();">
+        Cargar
+    </button>
+    <button mat-menu-item class="menu">
+        Descargar
+    </button>
+    <button mat-menu-item class="menu" (click)='cerrar()'>
+        Cerrar
+    </button>
+</mat-menu>
+
+<mat-menu #ejecucion="matMenu">
+    <button mat-menu-item class="menu" (click)="ejecutar()">
+        Ejecutar
+    </button>
+    <button mat-menu-item class="menu" (click)="activarErrores()">
+        Reporte errores
+    </button>
+    <button mat-menu-item class="menu" (click)="activarImagenes()">
+        Imagenes
+    </button>
+    <button mat-menu-item class="menu" (click)="activarConsola()">
+        Consola
+    </button>
+</mat-menu>
+<app-editor [proyecto]="proyecto"></app-editor>
+
+<app-ejecucion [ventanaActiva]="ventanaActiva"></app-ejecucion>
