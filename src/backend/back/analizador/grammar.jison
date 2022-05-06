@@ -1,3 +1,8 @@
+/*-----------------------IMPORTACIONES--------------------*/
+%{
+	
+%}
+
 /*-------------------------LEXICO-------------------------*/
 %lex
 
@@ -81,10 +86,6 @@
 .                       { console.error('Este es un error léxico: ' + yytext + ', en la linea: ' + yylloc.first_line + ', en la columna: ' + yylloc.first_column); }
 /lex
 
-%{
-  const { NodoAST } = require('../arbol/NodoAST');
-%}
-
 /*-------------------------SINTACTICO-------------------------*/
 
 // Asociación y precedencia
@@ -149,13 +150,12 @@ INSTRUCCIONES
 
 INSTRUCCION
 	: DECLARACIONES SALTOS
-	| ASIGNACION
-	| DECLARACION_FUNCION
+	| ASIGNACION SALTOS
 	| LLAMADA_FUNCION SALTOS
 	| RETORNO SALTOS
 	| INSTRUCCION_SI SALTOS
 	| INSTRUCCION_SINO SALTOS
-	| MOSTRAR
+	| MOSTRAR SALTOS
 	| PARA SALTOS
 	| MIENTRAS SALTOS
 	| DETENER SALTOS
@@ -191,7 +191,7 @@ MIENTRAS
 
 PARA 
 	: para par_a TIPO_VARIABLE_NATIVA id asig EXP pyc EXP pyc OP par_c dos_p  
-	| for par_a ASIGNACION pyc EXP pyc ASIGNACION_FOR par_c dos_p
+	| para par_a ASIGNACION pyc EXP pyc OP par_c dos_p
 ;
 
 OP
@@ -200,7 +200,7 @@ OP
 ;
 
 MOSTRAR 
-	: mostrar par_a LISTA_EXPRESIONES par_c SALTOS 
+	: mostrar par_a LISTA_EXPRESIONES par_c 
 ;
 
 INSTRUCCION_SI
@@ -235,59 +235,62 @@ PARAMETRO
 ;
 
 ASIGNACION
-	: id TIPO_IGUAL EXP SALTOS
+	: id TIPO_IGUAL EXP  //{$$ = new Parser.yy.Nodo("ASIGNACION",""); 	$$.agregarHijo(new Parser.yy.Nodo($1,"id"));
+		//																	$$.agregarHijo($2);
+	//																		$$.agregarHijo($3);
+	//}
 ; 
 
 TIPO_IGUAL
-	: asig 
+	: asig 						//{$$ = new Parser.yy.Nodo("TIPO_IGUAL",""); $$.agregarHijo(new Parser.yy.Nodo($1,"asig"));}
 ;
 
 IDS
-	: IDS coma id
-	| id
+	: IDS coma id				//{$$ = new Parser.yy.Nodo("IDS",""); $$.agregarHijo($1); $$.agregarHijo(new Parser.yy.Nodo($2,"coma")); $$.agregarHijo(new Parser.yy.Nodo($1,"id"));}
+	| id 						//{$$ = new Parser.yy.Nodo("IDS",""); $$.agregarHijo(new Parser.yy.Nodo($1,"id"));}
 ;
 
 TIPO_VARIABLE_NATIVA
-	: double  
-	| boolean 
-	| string 
-	| int 
-	| char 
-	| void 
+	: double  					//{$$ = new Parser.yy.Nodo("TIPO_VARIABLE_NATIVA",""); $$.agregarHijo(new Parser.yy.Nodo($1,"double"));}
+	| boolean 					//{$$ = new Parser.yy.Nodo("TIPO_VARIABLE_NATIVA",""); $$.agregarHijo(new Parser.yy.Nodo($1,"boolean"));}
+	| string 					//{$$ = new Parser.yy.Nodo("TIPO_VARIABLE_NATIVA",""); $$.agregarHijo(new Parser.yy.Nodo($1,"string"));}
+	| int 						//{$$ = new Parser.yy.Nodo("TIPO_VARIABLE_NATIVA",""); $$.agregarHijo(new Parser.yy.Nodo($1,"int"));}
+	| char 						//{$$ = new Parser.yy.Nodo("TIPO_VARIABLE_NATIVA",""); $$.agregarHijo(new Parser.yy.Nodo($1,"char"));}
+	| void 						//{$$ = new Parser.yy.Nodo("TIPO_VARIABLE_NATIVA",""); $$.agregarHijo(new Parser.yy.Nodo($1,"void"));}
 ;
 
 EXP
   //Operaciones Aritmeticas
-  : menos EXP %prec umenos  	{$$ = new NodoAST("EXP",""); $$.agregarHijo(new NodoAST("-","negativo")); $$.agregarHijo($2);}
-  | EXP mas EXP  				{$$ = new NodoAST("EXP",""); $$.agregarHijo($1); $$.agregarHijo(new NodoAST("+","suma")); $$.agregarHijo($3);}
-  | EXP menos EXP 				{$$ = new NodoAST("EXP",""); $$.agregarHijo($1); $$.agregarHijo(new NodoAST("-","resta")); $$.agregarHijo($3);}
-  | EXP por EXP					{$$ = new NodoAST("EXP",""); $$.agregarHijo($1); $$.agregarHijo(new NodoAST("*","producto")); $$.agregarHijo($3);} 
-  | EXP div EXP					{$$ = new NodoAST("EXP",""); $$.agregarHijo($1); $$.agregarHijo(new NodoAST("/","division")); $$.agregarHijo($3);} 
-  | EXP mod EXP					{$$ = new NodoAST("EXP",""); $$.agregarHijo($1); $$.agregarHijo(new NodoAST("%","mod")); $$.agregarHijo($3);} 
-  | EXP pot EXP					{$$ = new NodoAST("EXP",""); $$.agregarHijo($1); $$.agregarHijo(new NodoAST("^","potencia")); $$.agregarHijo($3);} 
-  | par_a EXP par_c 			{$$ = new NodoAST("EXP", ""); $$.agregarHijo($2);}
+  : menos EXP %prec umenos  	//{$$ = new Parser.yy.Nodo("EXP",""); $$.agregarHijo(new Parser.yy.Nodo("-","negativo")); $$.agregarHijo($2);}
+  | EXP mas EXP  				//{$$ = new Parser.yy.Nodo("EXP",""); $$.agregarHijo($1); $$.agregarHijo(new Parser.yy.Nodo("+","suma")); $$.agregarHijo($3);}
+  | EXP menos EXP 				//{$$ = new Parser.yy.Nodo("EXP",""); $$.agregarHijo($1); $$.agregarHijo(new Parser.yy.Nodo("-","resta")); $$.agregarHijo($3);}
+  | EXP por EXP					//{$$ = new Parser.yy.Nodo("EXP",""); $$.agregarHijo($1); $$.agregarHijo(new Parser.yy.Nodo("*","producto")); $$.agregarHijo($3);} 
+  | EXP div EXP					//{$$ = new Parser.yy.Nodo("EXP",""); $$.agregarHijo($1); $$.agregarHijo(new Parser.yy.Nodo("/","division")); $$.agregarHijo($3);} 
+  | EXP mod EXP					//{$$ = new Parser.yy.Nodo("EXP",""); $$.agregarHijo($1); $$.agregarHijo(new Parser.yy.Nodo("%","mod")); $$.agregarHijo($3);} 
+  | EXP pot EXP					//{$$ = new Parser.yy.Nodo("EXP",""); $$.agregarHijo($1); $$.agregarHijo(new Parser.yy.Nodo("^","potencia")); $$.agregarHijo($3);} 
+  | par_a EXP par_c 			//{$$ = new Parser.yy.Nodo("EXP",""); $$.agregarHijo($2);}
   //Operaciones de Comparacion
-  | EXP mayor EXP  				{$$ = new NodoAST("EXP",""); $$.agregarHijo($1); $$.agregarHijo(new NodoAST(">","mayor")); $$.agregarHijo($3);}
-  | EXP menor EXP 				{$$ = new NodoAST("EXP",""); $$.agregarHijo($1); $$.agregarHijo(new NodoAST("<","menor")); $$.agregarHijo($3);}
-  | EXP mayor_igual EXP 		{$$ = new NodoAST("EXP",""); $$.agregarHijo($1); $$.agregarHijo(new NodoAST(">=","mayor_igual")); $$.agregarHijo($3);}
-  | EXP menor_igual EXP 		{$$ = new NodoAST("EXP",""); $$.agregarHijo($1); $$.agregarHijo(new NodoAST("<=","menor_igual")); $$.agregarHijo($3);}
-  | EXP igual EXP 				{$$ = new NodoAST("EXP",""); $$.agregarHijo($1); $$.agregarHijo(new NodoAST("==","igual")); $$.agregarHijo($3);}
-  | EXP dif EXP					{$$ = new NodoAST("EXP",""); $$.agregarHijo($1); $$.agregarHijo(new NodoAST("!=","dif")); $$.agregarHijo($3);}
-  | EXP sig_inc EXP 			{$$ = new NodoAST("EXP",""); $$.agregarHijo($1); $$.agregarHijo(new NodoAST("~","sig_inc")); $$.agregarHijo($3);}
+  | EXP mayor EXP  				//{$$ = new Parser.yy.Nodo("EXP",""); $$.agregarHijo($1); $$.agregarHijo(new Parser.yy.Nodo(">","mayor")); $$.agregarHijo($3);}
+  | EXP menor EXP 				//{$$ = new Parser.yy.Nodo("EXP",""); $$.agregarHijo($1); $$.agregarHijo(new Parser.yy.Nodo("<","menor")); $$.agregarHijo($3);}
+  | EXP mayor_igual EXP 		//{$$ = new Parser.yy.Nodo("EXP",""); $$.agregarHijo($1); $$.agregarHijo(new Parser.yy.Nodo(">=","mayor_igual")); $$.agregarHijo($3);}
+  | EXP menor_igual EXP 		//{$$ = new Parser.yy.Nodo("EXP",""); $$.agregarHijo($1); $$.agregarHijo(new Parser.yy.Nodo("<=","menor_igual")); $$.agregarHijo($3);}
+  | EXP igual EXP 				//{$$ = new Parser.yy.Nodo("EXP",""); $$.agregarHijo($1); $$.agregarHijo(new Parser.yy.Nodo("==","igual")); $$.agregarHijo($3);}
+  | EXP dif EXP					//{$$ = new Parser.yy.Nodo("EXP",""); $$.agregarHijo($1); $$.agregarHijo(new Parser.yy.Nodo("!=","dif")); $$.agregarHijo($3);}
+  | EXP sig_inc EXP 			//{$$ = new Parser.yy.Nodo("EXP",""); $$.agregarHijo($1); $$.agregarHijo(new Parser.yy.Nodo("~","sig_inc")); $$.agregarHijo($3);}
   //Operaciones Lógicas
-  | EXP and EXP 				{$$ = new NodoAST("EXP",""); $$.agregarHijo($1); $$.agregarHijo(new NodoAST("&&","and")); $$.agregarHijo($3);}					
-  | EXP or EXP					{$$ = new NodoAST("EXP",""); $$.agregarHijo($1); $$.agregarHijo(new NodoAST("||","or")); $$.agregarHijo($3);}
-  | EXP xor EXP 				{$$ = new NodoAST("EXP",""); $$.agregarHijo($1); $$.agregarHijo(new NodoAST("|&","xor")); $$.agregarHijo($3);}	
-  | not EXP 					{$$ = new NodoAST("EXP",""); $$.agregarHijo(new NodoAST("!","not")); $$.agregarHijo($2);}
+  | EXP and EXP 				//{$$ = new Parser.yy.Nodo("EXP",""); $$.agregarHijo($1); $$.agregarHijo(new Parser.yy.Nodo("&&","and")); $$.agregarHijo($3);}					
+  | EXP or EXP					//{$$ = new Parser.yy.Nodo("EXP",""); $$.agregarHijo($1); $$.agregarHijo(new Parser.yy.Nodo("||","or")); $$.agregarHijo($3);}
+  | EXP xor EXP 				//{$$ = new Parser.yy.Nodo("EXP",""); $$.agregarHijo($1); $$.agregarHijo(new Parser.yy.Nodo("|&","xor")); $$.agregarHijo($3);}	
+  | not EXP 					//{$$ = new Parser.yy.Nodo("EXP",""); $$.agregarHijo(new Parser.yy.Nodo("!","not")); $$.agregarHijo($2);}
   //Valores Primitivos
-  | entero						{$$ = new NodoAST($1, "ENTERO");}
-  | decimal						{$$ = new NodoAST($1, "DECIMAL");}
-  | string						{$$ = new NodoAST($1, "STRING");}
-  | id							{$$ = new NodoAST($1, "ID");}
-  | true						{$$ = new NodoAST($1, "TRUE");}
-  | false						{$$ = new NodoAST($1, "FALSE");}
-  | cadena						{$$ = new NodoAST($1, "CADENA");}	
-  | char_exp 					{$$ = new NodoAST($1, "CHAR");}
+  | entero						//{$$ = new Parser.yy.Nodo("EXP",""); $$.agregarHijo(new Parser.yy.Nodo($1,"ENTERO"));}
+  | decimal						//{$$ = new Parser.yy.Nodo("EXP",""); $$.agregarHijo(new Parser.yy.Nodo($1,"DECIMAL"));}
+  | string						//{$$ = new Parser.yy.Nodo("EXP",""); $$.agregarHijo(new Parser.yy.Nodo($1,"STRING"));}
+  | id							//{$$ = new Parser.yy.Nodo("EXP",""); $$.agregarHijo(new Parser.yy.Nodo($1,"ID"));}
+  | true						//{$$ = new Parser.yy.Nodo("EXP",""); $$.agregarHijo(new Parser.yy.Nodo($1,"TRUE"));}
+  | false						//{$$ = new Parser.yy.Nodo("EXP",""); $$.agregarHijo(new Parser.yy.Nodo($1,"FALSE"));}
+  | cadena						//{$$ = new Parser.yy.Nodo("EXP",""); $$.agregarHijo(new Parser.yy.Nodo($1,"CADENA"));}	
+  | char_exp 					//{$$ = new Parser.yy.Nodo("EXP",""); $$.agregarHijo(new Parser.yy.Nodo($1,"CHAR"));}
   //Funciones
   | LLAMADA_FUNCION 
 ;

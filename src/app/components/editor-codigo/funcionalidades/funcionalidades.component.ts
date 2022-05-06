@@ -2,8 +2,12 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ContadorVentanas } from 'src/backend/front/ContadorVentanas';
 import { ManejadorEjecucion } from 'src/backend/front/ManejadorEjecucion';
 import { Proyecto } from 'src/backend/front/Proyecto';
-
-declare  var grammar:  any;
+import { NodoAST } from '../../../../backend/back/arbol/NodoAST';
+import { RecorrerArbol } from '../../../../backend/back/arbol/RecorrerArbol';
+declare var require: any;
+const myParser = require("./../../../../backend/back/analizador/grammar.js");
+let recorrer: RecorrerArbol = new RecorrerArbol();
+myParser.Parser.yy={Nodo:NodoAST, Rec:recorrer};
 
 @Component({
   selector: 'app-funcionalidades',
@@ -75,7 +79,7 @@ export class FuncionalidadesComponent implements OnInit {
 
   ejecutar() {
     try {
-      grammar.parse(this.proyecto.contenido);
+      myParser.parse(this.proyecto.contenido);
       console.log('analizado');
     } catch (error) {
       console.log('Ocurrio un error');

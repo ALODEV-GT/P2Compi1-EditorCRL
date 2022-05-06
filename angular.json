@@ -31,7 +31,8 @@
               "src/styles.css"
             ],
             "scripts": [
-              "src/backend/back/analizador/grammar.js"
+              "src/backend/back/analizador/grammar.js",
+              "src/backend/back/arbol/NodoAST.ts"
             ]
           },
           "configurations": {
