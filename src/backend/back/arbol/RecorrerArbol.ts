@@ -4,15 +4,15 @@ export class RecorrerArbol {
 
     }
 
-    recorrerArbol(nodo: NodoAST): string {
+    recorrerArbol(nodo: NodoAST | null): string {
         let concatenar: string;
-        if (nodo.tipo != "") {
-            concatenar = "-> " + nodo.valor + " - " + nodo.tipo + "\n";
+        if (nodo!.tipo != "") {
+            concatenar = "-> " + nodo!.valor + " - " + nodo!.tipo + "\n";
         } else {
-            concatenar = "#-> " + nodo.valor + "\n";
+            concatenar = "#-> " + nodo!.valor + "\n";
         }
 
-        nodo.hijos.forEach(element => {
+        nodo!.hijos.forEach(element => {
             concatenar += this.recorrerArbol(element);
         });
         return concatenar;
