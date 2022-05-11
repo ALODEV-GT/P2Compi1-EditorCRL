@@ -1,9 +1,8 @@
 import { NodoAST } from '../arbol/NodoAST';
 import { Entorno } from './Entorno';
-import { Salida } from './instrucciones/Salida';
 import { Instruccion } from './Instruccion';
 import { Entornos } from './Entornos';
-import { Log } from './instrucciones/Log';
+import { Salida } from './Salida';
 export class Ejecucion {
     _raiz: NodoAST;
     _contador: number = 0;

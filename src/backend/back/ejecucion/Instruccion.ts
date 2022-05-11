@@ -6,7 +6,7 @@ export abstract class Instruccion{
 
   constructor(linea: string){
     const valor = +linea + 1;
-    Object.assign(this, {linea: valor.toString()});
+    this._linea = linea;
   }
 
   getLinea() : string{
