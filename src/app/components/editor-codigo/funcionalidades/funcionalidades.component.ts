@@ -6,6 +6,9 @@ import { NodoAST } from '../../../../backend/back/arbol/NodoAST';
 import { RecorrerArbol } from '../../../../backend/back/arbol/RecorrerArbol';
 import { Lista } from '../../../../backend/back/ListaEnlazada/Lista';
 import { Agrupador } from '../../../../backend/back/ListaEnlazada/Agrupador';
+import { Ejecucion } from '../../../../backend/back/ejecucion/Ejecucion';
+import { graphviz } from 'd3-graphviz';
+
 declare var require: any;
 const myParser = require("./../../../../backend/back/analizador/grammar.js");
 let recorrer: RecorrerArbol = new RecorrerArbol();
@@ -82,12 +85,19 @@ export class FuncionalidadesComponent implements OnInit {
   }
 
   ejecutar() {
+    
     try {
       let raiz: NodoAST = myParser.parse(this.proyecto.contenido);
-      console.log(raiz);
-      console.log('analizado');
+      let ejecucion: Ejecucion = new Ejecucion(raiz);
+      let str3: string  = ejecucion.getDot();
+      console.log(str3);
+      graphviz('div').renderDot(str3);
+      //ejecucion.ejecutar();
+      console.log('analizado y ejecutado');
     } catch (error) {
       console.log('Ocurrio un error');
     }
   }
+
+
 }
