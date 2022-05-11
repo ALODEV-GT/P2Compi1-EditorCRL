@@ -3,7 +3,6 @@ import { ContadorVentanas } from 'src/backend/front/ContadorVentanas';
 import { ManejadorEjecucion } from 'src/backend/front/ManejadorEjecucion';
 import { Proyecto } from 'src/backend/front/Proyecto';
 import { NodoAST } from '../../../../backend/back/arbol/NodoAST';
-import { RecorrerArbol } from '../../../../backend/back/arbol/RecorrerArbol';
 import { Lista } from '../../../../backend/back/ListaEnlazada/Lista';
 import { Agrupador } from '../../../../backend/back/ListaEnlazada/Agrupador';
 import { Ejecucion } from '../../../../backend/back/ejecucion/Ejecucion';
@@ -11,10 +10,9 @@ import { graphviz } from 'd3-graphviz';
 
 declare var require: any;
 const myParser = require("./../../../../backend/back/analizador/grammar.js");
-let recorrer: RecorrerArbol = new RecorrerArbol();
 let listaInstrucciones: Lista = new Lista();
 let agrupador: Agrupador = new Agrupador();
-myParser.Parser.yy={Nodo:NodoAST, Rec:recorrer, LisIn: listaInstrucciones, Agrup: agrupador};
+myParser.Parser.yy={Nodo:NodoAST, LisIn: listaInstrucciones, Agrup: agrupador};
 
 @Component({
   selector: 'app-funcionalidades',
