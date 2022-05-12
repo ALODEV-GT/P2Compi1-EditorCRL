@@ -12,6 +12,10 @@ export class Ejecucion {
         this._raiz = raiz;
     }
 
+    /**
+     * Esta funcionalidad no es parte de las funcionalidades del proyecto, sin embargo
+     * es util para observar de manera grafica como esta construido el arbol sintactico.
+     */
     getDot(): string {
         this._dot = 'digraph G{';
         if (this._raiz != null) {
@@ -22,14 +26,14 @@ export class Ejecucion {
     }
 
     private generacionDot(nodo: NodoAST): void {
-            let idPadre = this._contador;
-            this._dot += `node${idPadre}[label="${this.formatear(nodo.valor)}"];`
-            nodo.hijos.forEach((nodoHijo: NodoAST) => {
-                let idHijo = ++this._contador;
-                this._dot += `node${idPadre} -> node${idHijo};`;
-                //${this.formatear(nodoHijo.valor)}; 
-                this.generacionDot(nodoHijo);
-            });
+        let idPadre = this._contador;
+        this._dot += `node${idPadre}[label="${this.formatear(nodo.valor)}"];`
+        nodo.hijos.forEach((nodoHijo: NodoAST) => {
+            let idHijo = ++this._contador;
+            this._dot += `node${idPadre} -> node${idHijo};`;
+            //${this.formatear(nodoHijo.valor)}; 
+            this.generacionDot(nodoHijo);
+        });
     }
 
     private formatear(valor: string): string {
@@ -41,24 +45,17 @@ export class Ejecucion {
 
     ejecutar() {
         const instrucciones = this.recorrer(this._raiz);
-        if (instrucciones instanceof Array) {
-            const entorno = new Entorno();
-            Salida.getInstance().clear();
-            instrucciones.forEach(element => {
-                if (element instanceof Instruccion) {
-                    try {
-                        element.ejecutar(entorno);
-                    } catch (error) {
-                        console.log("Error al pasar el entorno")
-                    }
+        const entorno = new Entorno();
+        Salida.getInstance().clear();
+        instrucciones.forEach((element: any) => {
+            if (element instanceof Instruccion) {
+                try {
+                    element.ejecutar(entorno);
+                } catch (error) {
+                    console.log("Error al ejecutar");
                 }
-            });
-            Entornos.getInstance().push(entorno);
-        }
-    }
-
-    getSalida(): String[] {
-        return Salida.getInstance().lista;
+            }
+        });
     }
 
     recorrer(nodo: NodoAST): any {
@@ -109,6 +106,11 @@ export class Ejecucion {
         //DECLARACIONES_FUN
         if (nodo.valor == "DECLARACION_FUN") {
             console.log("Nodo DECLARACION_FUN");
+        }
+
+        //FUNCION_PRINCIPAL
+        if(nodo.valor == "FUNCION_PRINCIPAL"){
+            
         }
 
         //DIBUJAR_AST
@@ -230,6 +232,10 @@ export class Ejecucion {
             // });
             // return lista;
         }
+    }
+
+    getSalida(): String[] {
+        return Salida.getInstance().lista;
     }
 
 }
