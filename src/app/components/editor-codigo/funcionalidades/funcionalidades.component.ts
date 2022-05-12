@@ -88,9 +88,8 @@ export class FuncionalidadesComponent implements OnInit {
       let raiz: NodoAST = myParser.parse(this.proyecto.contenido);
       let ejecucion: Ejecucion = new Ejecucion(raiz);
       let str3: string  = ejecucion.getDot();
-      console.log(str3);
       graphviz('div').renderDot(str3);
-      //ejecucion.ejecutar();
+      ejecucion.ejecutar();
       console.log('analizado y ejecutado');
     } catch (error) {
       console.log('Ocurrio un error');

@@ -3,6 +3,31 @@ import { Entorno } from './Entorno';
 import { Instruccion } from './Instruccion';
 import { Entornos } from './Entornos';
 import { Salida } from './Salida';
+import { TiposNativos } from './Declaraciones/TiposNativo';
+import { Id } from './Valores/Id';
+import { Decimal } from './Valores/Decimal';
+import { Entero } from './Valores/Entero';
+import { Boolean } from './Valores/Boolean';
+import { Cadena } from './Valores/Cadena';
+import { DeclaracionVar } from './Declaraciones/DeclaracionVar';
+import { Char } from './Valores/Char';
+import { Multiplicacion } from './Operaciones/Multiplicacion';
+import { Not } from './Operaciones/Not';
+import { Suma } from './Operaciones/Suma';
+import { Resta } from './Operaciones/Resta';
+import { Division } from './Operaciones/Division';
+import { Mod } from './Operaciones/Mod';
+import { Potencia } from './Operaciones/Potencia';
+import { Mayor } from './Operaciones/Mayor';
+import { Menor } from './Operaciones/Menor';
+import { MayorIgual } from './Operaciones/MayorIgual';
+import { MenorIgual } from './Operaciones/MenorIgual';
+import { Igual } from './Operaciones/Igual';
+import { Diferente } from './Operaciones/Diferente';
+import { Incerteza } from './Operaciones/Incerteza';
+import { And } from './Operaciones/And';
+import { Or } from './Operaciones/Or';
+import { Xor } from './Operaciones/Xor';
 export class Ejecucion {
     _raiz: NodoAST;
     _contador: number = 0;
@@ -45,30 +70,42 @@ export class Ejecucion {
 
     ejecutar() {
         const instrucciones = this.recorrer(this._raiz);
-        const entorno = new Entorno();
-        Salida.getInstance().clear();
-        instrucciones.forEach((element: any) => {
-            if (element instanceof Instruccion) {
-                try {
-                    element.ejecutar(entorno);
-                } catch (error) {
-                    console.log("Error al ejecutar");
-                }
-            }
-        });
+        console.log(instrucciones);
+        // const entorno = new Entorno();
+        // Salida.getInstance().clear();
+        // instrucciones.forEach((element: any) => {
+        //     if (element instanceof Instruccion) {
+        //         try {
+        //             element.ejecutar(entorno);
+        //         } catch (error) {
+        //             console.log("Error al ejecutar");
+        //         }
+        //     }
+        // });
     }
 
     recorrer(nodo: NodoAST): any {
         //INICIO
         if (nodo.valor == "INICIO") {
-            console.log("Nodo INICIO");
             return this.recorrer(nodo.hijos[0]);
         }
 
         //INSTRUCCIONES
         if (nodo.valor == "INSTRUCCIONES") {
-            console.log("Nodo INSTRUCCIONES")
             let instrucciones: any[] = [];
+            //Recorrer declaraciones de funciones y variables globales
+            nodo.hijos.forEach((nodoHijo: NodoAST) => {
+                if (nodoHijo.valor == "DECLARACION_FUN" || nodoHijo.valor == "DECLARACION_VAR") {
+                    const inst = this.recorrer(nodoHijo);
+                    if (inst instanceof Array) {
+                        instrucciones = instrucciones.concat(inst);
+                    } else {
+                        instrucciones.push(inst);
+                    }
+                }
+            });
+
+            //Recorrido de otras instrucciones
             nodo.hijos.forEach((nodoHijo: NodoAST) => {
                 const inst = this.recorrer(nodoHijo);
                 if (inst instanceof Array) {
@@ -94,13 +131,180 @@ export class Ejecucion {
             return instrucciones;
         }
 
-        //DECLARACIONES
         //DECLARACIONES_VAR
         if (nodo.valor == "DECLARACION_VAR") {
-            console.log("Nodo DECLARACION_VAR");
             //TIPO_VARIABLE_NATIVA id
-            //TIPO_VARIABLE_NATIVA id coma IDS asig EXP
-            //TIPO_VARIABLE_NATIVA id asig EXP
+            const tipo: TiposNativos = this.recorrer(nodo.hijos[0]);
+            let ids: string[] = [];
+            ids.push((this.recorrer(nodo.hijos[1]) as Id).id);
+            let exp: Instruccion | null = null;
+            switch (nodo.hijos.length) {
+                case 4: //TIPO_VARIABLE_NATIVA id asig EXP
+                    exp = this.recorrer(nodo.hijos[3]);
+                    break;
+                case 6: //TIPO_VARIABLE_NATIVA id coma IDS asig EXP
+                    ids = ids.concat(this.recorrer(nodo.hijos[3]));
+                    exp = this.recorrer(nodo.hijos[5])
+                    break;
+            }
+
+            return new DeclaracionVar(tipo, ids, exp, nodo.linea);
+            //Construir instruccion, agregarle linea y retornarlo
+
+        }
+
+        //EXP
+        if (nodo.valor == "EXP") {
+            switch (nodo.hijos.length) {
+                case 1:
+                    //Nativos
+                    //Llamada a funcion
+                    //par_a EXP par_c
+                    return this.recorrer(nodo.hijos[0]);
+                case 2:
+                    //menos EXP %prec umenos
+                    if (nodo.hijos[0].tipo == "resta" && nodo.hijos[1].valor == "EXP") {
+                        const expIzq: Instruccion = new Entero(-1, nodo.linea);
+                        const expDer: Instruccion = this.recorrer(nodo.hijos[1]);
+                        return new Multiplicacion(expIzq, expDer, nodo.linea);
+                    }
+                    //not EXP 			
+                    if (nodo.hijos[0].tipo == "not" && nodo.hijos[1].valor == "EXP") {
+                        const exp: Instruccion = this.recorrer(nodo.hijos[1]);
+                        return new Not(exp, nodo.linea);
+                    }
+                    break;
+                case 3:
+                    //EXP mas EXP
+                    if (nodo.hijos[0].valor == "EXP" && nodo.hijos[1].tipo == 'suma' && nodo.hijos[2].valor == "EXP") {
+                        const expIzq = this.recorrer(nodo.hijos[0]);
+                        const expDer = this.recorrer(nodo.hijos[2]);
+                        return new Suma(expIzq, expDer, nodo.linea);
+                    }
+                    //EXP menos EXP
+                    if (nodo.hijos[0].valor == "EXP" && nodo.hijos[1].tipo == 'resta' && nodo.hijos[2].valor == "EXP") {
+                        const expIzq = this.recorrer(nodo.hijos[0]);
+                        const expDer = this.recorrer(nodo.hijos[2]);
+                        return new Resta(expIzq, expDer, nodo.linea);
+                    }
+                    //EXP por EXP
+                    if (nodo.hijos[0].valor == "EXP" && nodo.hijos[1].tipo == 'producto' && nodo.hijos[2].valor == "EXP") {
+                        const expIzq = this.recorrer(nodo.hijos[0]);
+                        const expDer = this.recorrer(nodo.hijos[2]);
+                        return new Multiplicacion(expIzq, expDer, nodo.linea);
+                    }
+                    //EXP div EXP
+                    if (nodo.hijos[0].valor == "EXP" && nodo.hijos[1].tipo == 'division' && nodo.hijos[2].valor == "EXP") {
+                        const expIzq = this.recorrer(nodo.hijos[0]);
+                        const expDer = this.recorrer(nodo.hijos[2]);
+                        return new Division(expIzq, expDer, nodo.linea);
+                    }
+                    //EXP mod EXP
+                    if (nodo.hijos[0].valor == "EXP" && nodo.hijos[1].tipo == 'mod' && nodo.hijos[2].valor == "EXP") {
+                        const expIzq = this.recorrer(nodo.hijos[0]);
+                        const expDer = this.recorrer(nodo.hijos[2]);
+                        return new Mod(expIzq, expDer, nodo.linea);
+                    }
+                    //EXP pot EXP
+                    if (nodo.hijos[0].valor == "EXP" && nodo.hijos[1].tipo == 'potencia' && nodo.hijos[2].valor == "EXP") {
+                        const expIzq = this.recorrer(nodo.hijos[0]);
+                        const expDer = this.recorrer(nodo.hijos[2]);
+                        return new Potencia(expIzq, expDer, nodo.linea);
+                    }
+                    //EXP mayor EXP
+                    if (nodo.hijos[0].valor == "EXP" && nodo.hijos[1].tipo == 'mayor' && nodo.hijos[2].valor == "EXP") {
+                        const expIzq = this.recorrer(nodo.hijos[0]);
+                        const expDer = this.recorrer(nodo.hijos[2]);
+                        return new Mayor(expIzq, expDer, nodo.linea);
+                    }
+                    //EXP menor EXP
+                    if (nodo.hijos[0].valor == "EXP" && nodo.hijos[1].tipo == 'menor' && nodo.hijos[2].valor == "EXP") {
+                        const expIzq = this.recorrer(nodo.hijos[0]);
+                        const expDer = this.recorrer(nodo.hijos[2]);
+                        return new Menor(expIzq, expDer, nodo.linea);
+                    }
+                    //EXP mayor_igual EXP
+                    if (nodo.hijos[0].valor == "EXP" && nodo.hijos[1].tipo == 'mayor_igual' && nodo.hijos[2].valor == "EXP") {
+                        const expIzq = this.recorrer(nodo.hijos[0]);
+                        const expDer = this.recorrer(nodo.hijos[2]);
+                        return new MayorIgual(expIzq, expDer, nodo.linea);
+                    }
+                    //EXP menor_igual EXP
+                    if (nodo.hijos[0].valor == "EXP" && nodo.hijos[1].tipo == 'menor_igual' && nodo.hijos[2].valor == "EXP") {
+                        const expIzq = this.recorrer(nodo.hijos[0]);
+                        const expDer = this.recorrer(nodo.hijos[2]);
+                        return new MenorIgual(expIzq, expDer, nodo.linea);
+                    }
+                    //EXP igual EXP
+                    if (nodo.hijos[0].valor == "EXP" && nodo.hijos[1].tipo == 'igual' && nodo.hijos[2].valor == "EXP") {
+                        const expIzq = this.recorrer(nodo.hijos[0]);
+                        const expDer = this.recorrer(nodo.hijos[2]);
+                        return new Igual(expIzq, expDer, nodo.linea);
+                    }
+                    //EXP dif EXP
+                    if (nodo.hijos[0].valor == "EXP" && nodo.hijos[1].tipo == 'dif' && nodo.hijos[2].valor == "EXP") {
+                        const expIzq = this.recorrer(nodo.hijos[0]);
+                        const expDer = this.recorrer(nodo.hijos[2]);
+                        return new Diferente(expIzq, expDer, nodo.linea);
+                    }
+                    //EXP sig_inc EXP
+                    if (nodo.hijos[0].valor == "EXP" && nodo.hijos[1].tipo == 'sig_inc' && nodo.hijos[2].valor == "EXP") {
+                        const expIzq = this.recorrer(nodo.hijos[0]);
+                        const expDer = this.recorrer(nodo.hijos[2]);
+                        return new Incerteza(expIzq, expDer, nodo.linea);
+                    }
+                    //EXP and EXP
+                    if (nodo.hijos[0].valor == "EXP" && nodo.hijos[1].tipo == 'and' && nodo.hijos[2].valor == "EXP") {
+                        const expIzq = this.recorrer(nodo.hijos[0]);
+                        const expDer = this.recorrer(nodo.hijos[2]);
+                        return new And(expIzq, expDer, nodo.linea);
+                    }
+                    //EXP or EXP
+                    if (nodo.hijos[0].valor == "EXP" && nodo.hijos[1].tipo == 'or' && nodo.hijos[2].valor == "EXP") {
+                        const expIzq = this.recorrer(nodo.hijos[0]);
+                        const expDer = this.recorrer(nodo.hijos[2]);
+                        return new Or(expIzq, expDer, nodo.linea);
+                    }
+                    //EXP xor EXP
+                    if (nodo.hijos[0].valor == "EXP" && nodo.hijos[1].tipo == 'xor' && nodo.hijos[2].valor == "EXP") {
+                        const expIzq = this.recorrer(nodo.hijos[0]);
+                        const expDer = this.recorrer(nodo.hijos[2]);
+                        return new Xor(expIzq, expDer, nodo.linea);
+                    }
+            }
+        }
+
+        //id
+        if (nodo.tipo == "id") {
+            return new Id(nodo.valor, nodo.linea);
+        }
+
+        //ENTERO
+        if (nodo.tipo == "ENTERO") {
+            return new Entero(Number(nodo.valor), nodo.linea);
+        }
+
+        //DECIMAL
+        if (nodo.tipo == "DECIMAL") {
+            return new Decimal(Number(nodo.valor), nodo.linea);
+        }
+
+        //BOOLEAN
+        if (nodo.tipo == "BOOLEAN") {
+            if (nodo.valor == "true") {
+                return new Boolean(true, nodo.linea);
+            }
+            return new Boolean(false, nodo.linea);
+        }
+
+        //CADENA
+        if (nodo.tipo == "CADENA") {
+            return new Cadena(nodo.valor, nodo.linea);
+        }
+
+        //CHAR
+        if (nodo.tipo == "CHAR") {
+            return new Char(nodo.valor, nodo.linea);
         }
 
         //DECLARACIONES_FUN
@@ -109,8 +313,8 @@ export class Ejecucion {
         }
 
         //FUNCION_PRINCIPAL
-        if(nodo.valor == "FUNCION_PRINCIPAL"){
-            
+        if (nodo.valor == "FUNCION_PRINCIPAL") {
+
         }
 
         //DIBUJAR_AST
@@ -203,17 +407,34 @@ export class Ejecucion {
 
         //IDS
         if (nodo.valor == "IDS") {
-            console.log("Nodo IDS");
+            let ids: string[] = []
+            switch (nodo.hijos.length) {
+                case 1:
+                    ids.push(nodo.hijos[0].valor);
+                    return ids;
+                case 3:
+                    ids = ids.concat(this.recorrer(nodo.hijos[0]));
+                    ids.push(nodo.hijos[2].valor);
+                    return ids;
+            }
         }
 
         //TIPO_VARIABLE_NATIVA
         if (nodo.valor == "TIPO_VARIABLE_NATIVA") {
-            console.log("Nodo TIPO_VARIABLE_NATIVA");
-        }
-
-        //EXP
-        if (nodo.valor == "EXP") {
-            console.log("Nodo EXP");
+            switch (nodo.hijos[0].tipo) {
+                case "double":
+                    return TiposNativos.DOUBLE;
+                case "boolean":
+                    return TiposNativos.BOOLEAN;
+                case "string":
+                    return TiposNativos.STRING;
+                case "int":
+                    return TiposNativos.INT;
+                case "char":
+                    return TiposNativos.CHAR;
+                case "void":
+                    return TiposNativos.VOID;
+            }
         }
 
         //LLAMADA_FUNCION
