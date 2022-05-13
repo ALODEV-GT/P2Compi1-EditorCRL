@@ -30,6 +30,18 @@ import { Or } from './Operaciones/Or';
 import { Xor } from './Operaciones/Xor';
 import { Parametro } from './Funciones/Parametro';
 import { DeclaracionFuncion } from './Funciones/DeclaracionFuncion';
+import { Principal } from './Funciones/Principal';
+import { Retorno } from './flujo/Retorno';
+import { Continuar } from './flujo/Continuar';
+import { Detener } from './flujo/Detener';
+import { DibujarAST } from './Funciones/DibujarAST';
+import { DibujarEXP } from './Funciones/DibujarEXP';
+import { DibujarTS } from './Funciones/DibujarTS';
+import { Mientras } from './Instrucciones/Mientras';
+import { Asignacion } from './Declaraciones/Asignacion';
+import { For } from './Instrucciones/For';
+import { Mostrar } from './Instrucciones/Mostrar';
+import { LlamadaFuncion } from './Funciones/LLamadaFuncion';
 export class Ejecucion {
     _raiz: NodoAST;
     _contador: number = 0;
@@ -323,80 +335,7 @@ export class Ejecucion {
                 instrucciones = this.recorrer(nodo.hijos[nodo.hijos.length - 1]);
             }
 
-            return new DeclaracionFuncion(tipo, id, parametros, instrucciones, nodo.linea);
-        }
-
-        //FUNCION_PRINCIPAL
-        if (nodo.valor == "FUNCION_PRINCIPAL") {
-
-        }
-
-        //DIBUJAR_AST
-        if (nodo.valor == "DIBUJAR_AST") {
-            console.log("Nodo DIBUJAR_AST");
-        }
-
-        //DIBUJAR_EXP
-        if (nodo.valor == "DIBUJAR_EXP") {
-            console.log("Nodo DIBUJAR_EXP");
-        }
-
-        //DIBUJAR_TS
-        if (nodo.valor == "DIBUJAR_TS") {
-            console.log("Nodo DIBUJAR_TS");
-        }
-
-        //CONTINUAR
-        if (nodo.valor == "CONTINUAR") {
-            console.log("Nodo CONTINUAR");
-        }
-
-        //DETENER
-        if (nodo.valor == "DETENER") {
-            console.log("Nodo DETENER");
-        }
-
-        //MIENTRAS
-        if (nodo.valor == "MIENTRAS") {
-            console.log("Nodo MIENTRAS");
-        }
-
-        //PARA
-        if (nodo.valor == "PARA") {
-            console.log("Nodo PARA");
-        }
-
-        //OP
-        if (nodo.valor == "OP") {
-            console.log("Nodo OP");
-        }
-
-        //MOSTRAR
-        if (nodo.valor == "MOSTRAR") {
-            // console.log("Nodo MOSTRAR");
-            // //mostrar par_a LISTA_EXPRESIONES par_c
-            // const lista = this.recorrer(nodo.hijos[2]) as Array<Instruccion>;
-            // return new Log(nodo.linea, lista);
-        }
-
-        //INSTRUCCION_SI
-        if (nodo.valor == "INSTRUCCION_SI") {
-            console.log("Nodo INSTRUCCION_SI");
-        }
-
-        //INSTRUCCION_SINO
-        if (nodo.valor == "INSTRUCCION_SINO") {
-            console.log("Nodo INSTRUCCION_SINO");
-        }
-
-        //RETORNO
-        if (nodo.valor == "RETORNO") {
-            console.log("Nodo RETORNO");
-        }
-
-        //DECLARACIONES
-        if (nodo.valor == "DECLARACIONES") {
-            console.log("Nodo DECLARACIONES");
+            return new DeclaracionFuncion(tipo, id, parametros, instrucciones, nodo, nodo.linea);
         }
 
         //LISTA_PARAMETROS
@@ -419,16 +358,6 @@ export class Ejecucion {
             const tipo: TiposNativos = this.recorrer(nodo.hijos[0]);
             let id: string = (this.recorrer(nodo.hijos[1]) as Id).id;
             return new Parametro(tipo, id, nodo.linea);
-        }
-
-        //ASIGNACION
-        if (nodo.valor == "ASIGNACION") {
-            console.log("Nodo ASIGNACION");
-        }
-
-        //TIPO_IGUAL
-        if (nodo.valor == "TIPO_IGUAL") {
-            console.log("Nodo TIPO_IGUAL");
         }
 
         //IDS
@@ -463,21 +392,165 @@ export class Ejecucion {
             }
         }
 
-        //LLAMADA_FUNCION
-        if (nodo.valor == "LLAMADA_FUNCION") {
-            console.log("Nodo LLAMADA_FUNCION")
+        //FUNCION_PRINCIPAL
+        if (nodo.valor == "FUNCION_PRINCIPAL") {
+            //void principal par_a par_c dos_p
+            let tipo: TiposNativos = TiposNativos.VOID;
+            let id: string = "Principal"
+            let instrucciones: Instruccion[] = [];
+            if (nodo.hijos.length == 6) {
+                instrucciones = this.recorrer(nodo.hijos[nodo.hijos.length - 1]);
+            }
+            return new Principal(tipo, id, instrucciones, nodo.linea);
+        }
+
+        //RETORNO
+        if (nodo.valor == "RETORNO") {
+            switch (nodo.hijos.length) {
+                case 1:
+                    //retorno
+                    return new Retorno(null, nodo.linea);
+                case 2:
+                    //retorno EXP
+                    const exp = this.recorrer(nodo.hijos[1]);
+                    return new Retorno(exp, nodo.linea);
+            }
+        }
+
+        //CONTINUAR
+        if (nodo.valor == "CONTINUAR") {
+            return new Continuar(nodo.linea);
+        }
+
+        //DETENER
+        if (nodo.valor == "DETENER") {
+            return new Detener(nodo.linea);
+        }
+
+        //DIBUJAR_AST
+        if (nodo.valor == "DIBUJAR_AST") {
+            let id: string = nodo.hijos[2].valor;
+            return new DibujarAST(id, nodo.linea);
+        }
+
+        //DIBUJAR_EXP
+        if (nodo.valor == "DIBUJAR_EXP") {
+            //dib_exp par_a EXP par_c
+            return new DibujarEXP(nodo.hijos[2], nodo.linea);
+        }
+
+        //DIBUJAR_TS
+        if (nodo.valor == "DIBUJAR_TS") {
+            return new DibujarTS(nodo.linea);
+        }
+
+        //MIENTRAS
+        if (nodo.valor == "MIENTRAS") {
+            //mientras par_a EXP par_c dos_p
+            const condicion = this.recorrer(nodo.hijos[2]);
+            let instrucciones: Instruccion[] = [];
+            if (nodo.hijos.length == 6) {
+                instrucciones = this.recorrer(nodo.hijos[nodo.hijos.length - 1]);
+            }
+            return new Mientras(condicion, instrucciones, nodo.linea);
+        }
+
+        //ASIGNACION
+        if (nodo.valor == "ASIGNACION") {
+            //id TIPO_IGUAL EXP
+            const id = nodo.hijos[0].valor;
+            const exp = this.recorrer(nodo.hijos[2]);
+            return new Asignacion(id, exp, nodo.linea);
+        }
+
+        //TIPO_IGUAL
+        if (nodo.valor == "TIPO_IGUAL") {
+            return "=";
+        }
+
+        //PARA
+        if (nodo.valor == "PARA") {
+            let condicion: Instruccion;
+            let instrucciones: Instruccion[] = [];
+            let incremento: boolean;
+            let variable: Instruccion | null = null;
+
+            //para par_a TIPO_VARIABLE_NATIVA id asig EXP pyc EXP pyc OP par_c dos_p
+            if (nodo.hijos.length >= 12) {
+                condicion = this.recorrer(nodo.hijos[7]);
+                incremento = this.recorrer(nodo.hijos[9]);
+                let tipo: TiposNativos = this.recorrer(nodo.hijos[2]);
+                let ids: string[] = [];
+                ids.push(nodo.hijos[3].valor);
+                let exp: Instruccion = this.recorrer(nodo.hijos[5]);
+                variable = new DeclaracionVar(tipo, ids, exp, nodo.linea);
+            } else { //para par_a ASIGNACION pyc EXP pyc OP par_c dos_p
+                condicion = this.recorrer(nodo.hijos[4]);
+                incremento = this.recorrer(nodo.hijos[6]);
+                variable = this.recorrer(nodo.hijos[2]);
+            }
+
+            if (nodo.hijos.length == 13 || nodo.hijos.length == 10) {
+                instrucciones = this.recorrer(nodo.hijos[nodo.hijos.length - 1]);
+            }
+
+            return new For(condicion, incremento, instrucciones, variable, nodo.linea);
+        }
+
+        //OP
+        if (nodo.valor == "OP") {
+            if (nodo.hijos[0].tipo == "inc") {
+                return true;
+            }
+            return false;
+        }
+
+        //MOSTRAR
+        if (nodo.valor == "MOSTRAR") {
+            //mostrar par_a LISTA_EXPRESIONES par_c
+            const expresiones: Instruccion[] = this.recorrer(nodo.hijos[2]);
+            return new Mostrar(expresiones, nodo.linea);
         }
 
         //LISTA_EXPRESIONES
         if (nodo.valor == "LISTA_EXPRESIONES") {
-            console.log("Nodo LISTA_EXPRESIONES");
-            // //EXP coma EXP
-            // const lista: any = [];
-            // nodo.hijos.forEach((nodoHijo: NodoAST) => {
-            //     const exp = this.recorrer(nodoHijo);
-            //     lista.push(exp);
-            // });
-            // return lista;
+            let expresiones: Instruccion[] = [];
+            switch (nodo.hijos.length) {
+                case 1:
+                    //EXP
+                    expresiones.push(this.recorrer(nodo.hijos[0]));
+                    return expresiones;
+                case 3:
+                    //LISTA_EXPRESIONES coma EXP
+                    expresiones = expresiones.concat(this.recorrer(nodo.hijos[0]));
+                    expresiones.push(this.recorrer(nodo.hijos[2]));
+                    return expresiones;
+            }
+        }
+
+        //LLAMADA_FUNCION
+        if (nodo.valor == "LLAMADA_FUNCION") {
+            //id par_a par_c
+            const id: string = nodo.hijos[0].valor;
+            let parametros: Instruccion[] = [];
+
+            //id par_a LISTA_EXPRESIONES par_c
+            if (nodo.hijos.length == 4) {
+                parametros = this.recorrer(nodo.hijos[2])
+            }
+            return new LlamadaFuncion(id, parametros, nodo.linea);
+        }
+
+        //----------------------------> aun faltan
+
+        //INSTRUCCION_SI
+        if (nodo.valor == "INSTRUCCION_SI") {
+            console.log("Nodo INSTRUCCION_SI");
+        }
+
+        //INSTRUCCION_SINO
+        if (nodo.valor == "INSTRUCCION_SINO") {
+            console.log("Nodo INSTRUCCION_SINO");
         }
     }
 
