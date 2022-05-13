@@ -28,6 +28,8 @@ import { Incerteza } from './Operaciones/Incerteza';
 import { And } from './Operaciones/And';
 import { Or } from './Operaciones/Or';
 import { Xor } from './Operaciones/Xor';
+import { Parametro } from './Funciones/Parametro';
+import { DeclaracionFuncion } from './Funciones/DeclaracionFuncion';
 export class Ejecucion {
     _raiz: NodoAST;
     _contador: number = 0;
@@ -95,7 +97,7 @@ export class Ejecucion {
             let instrucciones: any[] = [];
             //Recorrer declaraciones de funciones y variables globales
             nodo.hijos.forEach((nodoHijo: NodoAST) => {
-                if (nodoHijo.valor == "DECLARACION_FUN" || nodoHijo.valor == "DECLARACION_VAR") {
+                if (nodoHijo.valor == "DECLARACION_FUN") {
                     const inst = this.recorrer(nodoHijo);
                     if (inst instanceof Array) {
                         instrucciones = instrucciones.concat(inst);
@@ -107,18 +109,19 @@ export class Ejecucion {
 
             //Recorrido de otras instrucciones
             nodo.hijos.forEach((nodoHijo: NodoAST) => {
-                const inst = this.recorrer(nodoHijo);
-                if (inst instanceof Array) {
-                    instrucciones = instrucciones.concat(inst);
-                } else {
-                    instrucciones.push(inst);
+                if (!(nodoHijo.valor == "DECLARACION_FUN")) {
+                    const inst = this.recorrer(nodoHijo);
+                    if (inst instanceof Array) {
+                        instrucciones = instrucciones.concat(inst);
+                    } else {
+                        instrucciones.push(inst);
+                    }
                 }
             });
             return instrucciones;
         }
 
         if (nodo.valor == "INSTRUCCION") {
-            console.log("Nodo INSTRUCCION");
             let instrucciones: any[] = [];
             nodo.hijos.forEach((nodoHijo: NodoAST) => {
                 const inst = this.recorrer(nodoHijo);
@@ -147,10 +150,7 @@ export class Ejecucion {
                     exp = this.recorrer(nodo.hijos[5])
                     break;
             }
-
             return new DeclaracionVar(tipo, ids, exp, nodo.linea);
-            //Construir instruccion, agregarle linea y retornarlo
-
         }
 
         //EXP
@@ -309,7 +309,21 @@ export class Ejecucion {
 
         //DECLARACIONES_FUN
         if (nodo.valor == "DECLARACION_FUN") {
-            console.log("Nodo DECLARACION_FUN");
+            //TIPO_VARIABLE_NATIVA id par_a par_c dos_p
+            const tipo: TiposNativos = this.recorrer(nodo.hijos[0]);
+            let id: string = (this.recorrer(nodo.hijos[1]) as Id).id;
+            let parametros: Parametro[] = [];
+            let instrucciones: [] = [];
+            //TIPO_VARIABLE_NATIVA id par_a LISTA_PARAMETROS par_c dos_p
+            if (nodo.hijos.length >= 6) {
+                parametros = this.recorrer(nodo.hijos[3]);
+            }
+
+            if (nodo.hijos.length == 6 || nodo.hijos.length == 7) {
+                instrucciones = this.recorrer(nodo.hijos[nodo.hijos.length - 1]);
+            }
+
+            return new DeclaracionFuncion(tipo, id, parametros, instrucciones, nodo.linea);
         }
 
         //FUNCION_PRINCIPAL
@@ -387,12 +401,24 @@ export class Ejecucion {
 
         //LISTA_PARAMETROS
         if (nodo.valor == "LISTA_PARAMETROS") {
-            console.log("Nodo LISTA_PARAMETROS");
+            let parametros: Parametro[] = [];
+            console.log("debug")
+            switch (nodo.hijos.length) {
+                case 1:
+                    parametros.push(this.recorrer(nodo.hijos[0]));
+                    return parametros;
+                case 3:
+                    parametros = parametros.concat(this.recorrer(nodo.hijos[0]));
+                    parametros.push(this.recorrer(nodo.hijos[2]));
+                    return parametros;
+            }
         }
 
         //PARAMETRO
         if (nodo.valor == "PARAMETRO") {
-            console.log("Nodo PARAMETRO");
+            const tipo: TiposNativos = this.recorrer(nodo.hijos[0]);
+            let id: string = (this.recorrer(nodo.hijos[1]) as Id).id;
+            return new Parametro(tipo, id, nodo.linea);
         }
 
         //ASIGNACION
