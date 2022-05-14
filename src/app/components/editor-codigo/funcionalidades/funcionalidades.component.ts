@@ -12,7 +12,7 @@ declare var require: any;
 const myParser = require("./../../../../backend/back/analizador/grammar.js");
 let listaInstrucciones: Lista = new Lista();
 let agrupador: Agrupador = new Agrupador();
-myParser.Parser.yy={Nodo:NodoAST, LisIn: listaInstrucciones, Agrup: agrupador};
+myParser.Parser.yy = { Nodo: NodoAST, LisIn: listaInstrucciones, Agrup: agrupador };
 
 @Component({
   selector: 'app-funcionalidades',
@@ -52,22 +52,44 @@ export class FuncionalidadesComponent implements OnInit {
     }
   }
 
+  selectedFile: File | null = null
+  texto: any;
   archivo: any;
-  basicUploadSingle(event: any) {
-    this.archivo = event.target.files[0];
-    this.leerArchivo();
+
+  fileUploadInAngular(event: any) {
+    const files = (event.target as HTMLInputElement).files;
+    if (files != null) {
+      this.selectedFile = files.item(0);
+    }
+    this.imprimir();
   }
 
-  leerArchivo() {
+  imprimir() {
     let fileReader = new FileReader();
+
     fileReader.onload = (e) => {
-      console.log(fileReader.result);
+      const contenido = e.target?.result;
+
+      //console.log(fileReader.result);
+      this.proyecto.contenido = fileReader.result as string;
     }
 
-    //Este contiene el contenido.
-    fileReader.readAsText(this.archivo);
-    this.proyecto.contenido = "fileReader.result?.toString() || ";
-    console.log("Cabio de contenido")
+    if (this.selectedFile != null) {
+      fileReader.readAsText(this.selectedFile);
+    } else {
+      console.log("archivo nulo");
+    }
+  }
+
+  descargar() {
+    const a = document.createElement("a");
+    const contenido = this.proyecto.contenido;
+    const enlc = new Blob([contenido], { type: "text/crl" });
+    const url = window.URL.createObjectURL(enlc);
+    a.href = url;
+    a.download = "Proyecto" + this.proyecto.idVentana + ".crl";
+    a.click();
+    URL.revokeObjectURL(url)
   }
 
   activarConsola() {
@@ -83,11 +105,11 @@ export class FuncionalidadesComponent implements OnInit {
   }
 
   ejecutar() {
-    
+
     try {
       let raiz: NodoAST = myParser.parse(this.proyecto.contenido);
       let ejecucion: Ejecucion = new Ejecucion(raiz);
-      let str3: string  = ejecucion.getDot();
+      let str3: string = ejecucion.getDot();
       graphviz('div').renderDot(str3);
       ejecucion.ejecutar();
       console.log('analizado y ejecutado');

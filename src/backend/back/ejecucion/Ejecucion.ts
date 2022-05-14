@@ -343,7 +343,6 @@ export class Ejecucion {
         //LISTA_PARAMETROS
         if (nodo.valor == "LISTA_PARAMETROS") {
             let parametros: Parametro[] = [];
-            console.log("debug")
             switch (nodo.hijos.length) {
                 case 1:
                     parametros.push(this.recorrer(nodo.hijos[0]));

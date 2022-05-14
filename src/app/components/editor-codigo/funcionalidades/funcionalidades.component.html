@@ -9,7 +9,7 @@
     </button>
 </span>
 
-<input class="invisible" type="file" accept=".crl" (change)="basicUploadSingle($event)" #fileInput />
+<input class="invisible" type="file" accept=".crl" (change)="fileUploadInAngular($event)" #fileInput />
 
 <mat-menu #archivo="matMenu">
     <button mat-menu-item class="menu" (click)='agregarVentana()'>
@@ -18,7 +18,7 @@
     <button mat-menu-item class="menu" (click)="fileInput.click();">
         Cargar
     </button>
-    <button mat-menu-item class="menu">
+    <button mat-menu-item class="menu" (click)="descargar()">
         Descargar
     </button>
     <button mat-menu-item class="menu" (click)='cerrar()'>
