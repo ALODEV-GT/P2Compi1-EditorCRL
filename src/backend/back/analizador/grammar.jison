@@ -158,8 +158,8 @@ INSTRUCCION
 	| ASIGNACION SALTOS				{$$ = new Parser.yy.Nodo("INSTRUCCION","", yylineno); $$.agregarHijo($1); Parser.yy.LisIn.agregarNodo($$,contadorTabs); contadorTabs=0;}
 	| LLAMADA_FUNCION SALTOS		{$$ = new Parser.yy.Nodo("INSTRUCCION","", yylineno); $$.agregarHijo($1); Parser.yy.LisIn.agregarNodo($$,contadorTabs); contadorTabs=0;}
 	| RETORNO SALTOS				{$$ = new Parser.yy.Nodo("INSTRUCCION","", yylineno); $$.agregarHijo($1); Parser.yy.LisIn.agregarNodo($$,contadorTabs); contadorTabs=0;}
-	| INSTRUCCION_SI SALTOS			{$$ = new Parser.yy.Nodo("INSTRUCCION","", yylineno); $$.agregarHijo($1); Parser.yy.LisIn.agregarNodo($$,contadorTabs); contadorTabs=0;}
-	| INSTRUCCION_SINO SALTOS		{$$ = new Parser.yy.Nodo("INSTRUCCION","", yylineno); $$.agregarHijo($1); Parser.yy.LisIn.agregarNodo($$,contadorTabs); contadorTabs=0;}
+	| SI SALTOS						{$$ = new Parser.yy.Nodo("INSTRUCCION","", yylineno); $$.agregarHijo($1); Parser.yy.LisIn.agregarNodo($$,contadorTabs); contadorTabs=0;}
+	| SINO SALTOS					{$$ = new Parser.yy.Nodo("INSTRUCCION","", yylineno); $$.agregarHijo($1); Parser.yy.LisIn.agregarNodo($$,contadorTabs); contadorTabs=0;}
 	| MOSTRAR SALTOS				{$$ = new Parser.yy.Nodo("INSTRUCCION","", yylineno); $$.agregarHijo($1); Parser.yy.LisIn.agregarNodo($$,contadorTabs); contadorTabs=0;}
 	| PARA SALTOS					{$$ = new Parser.yy.Nodo("INSTRUCCION","", yylineno); $$.agregarHijo($1); Parser.yy.LisIn.agregarNodo($$,contadorTabs); contadorTabs=0;}
 	| MIENTRAS SALTOS				{$$ = new Parser.yy.Nodo("INSTRUCCION","", yylineno); $$.agregarHijo($1); Parser.yy.LisIn.agregarNodo($$,contadorTabs); contadorTabs=0;}
@@ -213,12 +213,12 @@ MOSTRAR
 	: mostrar par_a LISTA_EXPRESIONES par_c {$$ = new Parser.yy.Nodo("MOSTRAR","",yylineno); $$.agregarHijo(new Parser.yy.Nodo($1,"mostrar",yylineno)); $$.agregarHijo(new Parser.yy.Nodo($2,"par_a",yylineno)); $$.agregarHijo($3); $$.agregarHijo(new Parser.yy.Nodo($4,"par_c",yylineno));}
 ;
 
-INSTRUCCION_SI
-	: si par_a EXP par_c dos_p		{$$ = new Parser.yy.Nodo("INSTRUCCION_SI","",yylineno); $$.agregarHijo(new Parser.yy.Nodo($1,"si",yylineno)); $$.agregarHijo(new Parser.yy.Nodo($2,"par_a",yylineno)); $$.agregarHijo($3); $$.agregarHijo(new Parser.yy.Nodo($4,"par_c",yylineno)); $$.agregarHijo(new Parser.yy.Nodo($5,"dos_p",yylineno));}		
+SI
+	: si par_a EXP par_c dos_p		{$$ = new Parser.yy.Nodo("SI","",yylineno); $$.agregarHijo(new Parser.yy.Nodo($1,"si",yylineno)); $$.agregarHijo(new Parser.yy.Nodo($2,"par_a",yylineno)); $$.agregarHijo($3); $$.agregarHijo(new Parser.yy.Nodo($4,"par_c",yylineno)); $$.agregarHijo(new Parser.yy.Nodo($5,"dos_p",yylineno));}		
 ;
 
-INSTRUCCION_SINO
-	: sino dos_p	{$$ = new Parser.yy.Nodo("INSTRUCCION_SINO","",yylineno); $$.agregarHijo(new Parser.yy.Nodo($1,"sino",yylineno)); $$.agregarHijo(new Parser.yy.Nodo($2,"dos_p",yylineno));}
+SINO
+	: sino dos_p	{$$ = new Parser.yy.Nodo("SINO","",yylineno); $$.agregarHijo(new Parser.yy.Nodo($1,"sino",yylineno)); $$.agregarHijo(new Parser.yy.Nodo($2,"dos_p",yylineno));}
 ;
 
 RETORNO

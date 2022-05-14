@@ -543,13 +543,13 @@ export class Ejecucion {
 
         //----------------------------> aun faltan
 
-        //INSTRUCCION_SI
-        if (nodo.valor == "INSTRUCCION_SI") {
+        //SI
+        if (nodo.valor == "SI") {
             console.log("Nodo INSTRUCCION_SI");
         }
 
-        //INSTRUCCION_SINO
-        if (nodo.valor == "INSTRUCCION_SINO") {
+        //SINO
+        if (nodo.valor == "SINO") {
             console.log("Nodo INSTRUCCION_SINO");
         }
     }

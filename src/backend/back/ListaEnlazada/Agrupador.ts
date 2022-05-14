@@ -9,7 +9,7 @@ export class Agrupador {
         let numTabsAnterior: number;
         while (nodo != null) {
             let tipo: string = nodo.valor.hijos[0].valor;
-            if (tipo == "MIENTRAS" || tipo == "INSTRUCCION_SI" || tipo == "INSTRUCCION_SINO"
+            if (tipo == "MIENTRAS" || tipo == "SI" || tipo == "SINO"
                 || tipo == "DECLARACION_FUN" || tipo == "PARA" || tipo == "FUNCION_PRINCIPAL") {
                 let anterior: Nodo | null = nodo.anterior;
                 if (anterior != null) {
