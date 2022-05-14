@@ -1,5 +1,5 @@
 <div *ngIf="this.ventanaActiva.ventanaActiva == this.TERMINAL">
-    <app-terminal></app-terminal>
+    <app-terminal [lista]="lista"></app-terminal>
 </div>
 <div *ngIf="this.ventanaActiva.ventanaActiva == this.ERRORES">
     <app-reporte-errores></app-reporte-errores>

@@ -7,6 +7,7 @@ import { Lista } from '../../../../backend/back/ListaEnlazada/Lista';
 import { Agrupador } from '../../../../backend/back/ListaEnlazada/Agrupador';
 import { Ejecucion } from '../../../../backend/back/ejecucion/Ejecucion';
 import { graphviz } from 'd3-graphviz';
+import { Salida } from 'src/backend/back/ejecucion/Salida';
 
 declare var require: any;
 const myParser = require("./../../../../backend/back/analizador/grammar.js");
@@ -32,6 +33,8 @@ export class FuncionalidadesComponent implements OnInit {
   @Input() contadorVentanas!: ContadorVentanas;
 
   ventanaActiva: ManejadorEjecucion = new ManejadorEjecucion();
+
+  lista: any[] = [];
 
   agregarVentana() {
     this.proyectos.push(new Proyecto("", this.contadorVentanas.contador));
@@ -69,8 +72,6 @@ export class FuncionalidadesComponent implements OnInit {
 
     fileReader.onload = (e) => {
       const contenido = e.target?.result;
-
-      //console.log(fileReader.result);
       this.proyecto.contenido = fileReader.result as string;
     }
 
@@ -105,8 +106,11 @@ export class FuncionalidadesComponent implements OnInit {
   }
 
   ejecutar() {
-
+    Salida.getInstance().clear();
     try {
+      console.log("Contenido a analizar:");
+      console.log(this.proyecto.contenido);
+      
       let raiz: NodoAST = myParser.parse(this.proyecto.contenido);
       let ejecucion: Ejecucion = new Ejecucion(raiz);
       let str3: string = ejecucion.getDot();
@@ -116,6 +120,8 @@ export class FuncionalidadesComponent implements OnInit {
     } catch (error) {
       console.log('Ocurrio un error');
     }
+
+    this.lista = Salida.getInstance().lista;
   }
 
 

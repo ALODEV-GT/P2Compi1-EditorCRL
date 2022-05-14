@@ -10,7 +10,7 @@ export class Entero extends Instruccion {
     }
 
     ejecutar(e: Entorno) {
-        throw new Error('Method not implemented.');
+        return this;
     }
     public get valor_1(): number {
         return this._valor;

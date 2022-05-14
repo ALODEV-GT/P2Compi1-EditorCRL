@@ -87,17 +87,17 @@ export class Ejecucion {
     ejecutar() {
         const instrucciones = this.recorrer(this._raiz);
         console.log(instrucciones);
-        // const entorno = new Entorno();
-        // Salida.getInstance().clear();
-        // instrucciones.forEach((element: any) => {
-        //     if (element instanceof Instruccion) {
-        //         try {
-        //             element.ejecutar(entorno);
-        //         } catch (error) {
-        //             console.log("Error al ejecutar");
-        //         }
-        //     }
-        // });
+        const entorno = new Entorno();
+        Salida.getInstance().clear();
+        instrucciones.forEach((element: any) => {
+            if (element instanceof Instruccion) {
+                try {
+                    element.ejecutar(entorno);
+                } catch (error) {
+                    console.log("Error al ejecutar");
+                }
+            }
+        });
     }
 
     recorrer(nodo: NodoAST): any {
@@ -541,8 +541,6 @@ export class Ejecucion {
             }
             return new LlamadaFuncion(id, parametros, nodo.linea);
         }
-
-        //----------------------------> aun faltan
 
         //INSTRUCCION_SI
         if (nodo.valor == "INSTRUCCION_SI") {

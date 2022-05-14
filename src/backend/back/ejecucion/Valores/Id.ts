@@ -9,7 +9,7 @@ export class Id extends Instruccion {
     }
 
     ejecutar(e: Entorno) {
-        throw new Error('Method not implemented.');
+        return this;
     }
 
     public get id(): string {

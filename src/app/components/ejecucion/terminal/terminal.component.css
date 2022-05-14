@@ -1,0 +1,20 @@
+.consola{
+    background-color: rgb(27, 27, 27);
+    border-radius: 2px;
+}
+
+.item{
+    color: rgb(22, 223, 56);
+    font-size: 15px;
+    padding-left: 7px;
+}
+
+.contenedor{
+    padding: 10px;
+    min-height: 60px;
+}
+
+.titulo{
+    font-size: 27px;
+    padding-top: 10px;
+}

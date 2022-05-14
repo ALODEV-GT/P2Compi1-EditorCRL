@@ -17,7 +17,7 @@ export class Cadena extends Instruccion {
     }
 
     ejecutar(e: Entorno) {
-        throw new Error('Method not implemented.');
+        return this;
     }
 
     public get valor(): string {
