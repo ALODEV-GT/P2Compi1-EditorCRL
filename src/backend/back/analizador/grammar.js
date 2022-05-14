@@ -129,7 +129,7 @@ case 48:
 this.$ = new Parser.yy.Nodo("MOSTRAR","",yylineno); this.$.agregarHijo(new Parser.yy.Nodo($$[$0-3],"mostrar",yylineno)); this.$.agregarHijo(new Parser.yy.Nodo($$[$0-2],"par_a",yylineno)); this.$.agregarHijo($$[$0-1]); this.$.agregarHijo(new Parser.yy.Nodo($$[$0],"par_c",yylineno));
 break;
 case 49:
-this.$ = new Parser.yy.Nodo("SI","",yylineno); this.$.agregarHijo(new Parser.yy.Nodo($$[$0-4],"si",yylineno)); this.$.agregarHijo(new Parser.yy.Nodo($$[$0-3],"par_a",yylineno)); this.$.agregarHijo($$[$0-2]); this.$.agregarHijo(new Parser.yy.Nodo($$[$0-1],"par_c",yylineno)); this.$.agregarHijo(new Parser.yy.Nodo($$[$0],"dos_p",yylineno));
+this.$ = new Parser.yy.Nodo("INSTRUCCION_SI","",yylineno); let si = new Parser.yy.Nodo("SI","",yylineno); si.agregarHijo(new Parser.yy.Nodo($$[$0-4],"si",yylineno)); si.agregarHijo(new Parser.yy.Nodo($$[$0-3],"par_a",yylineno)); si.agregarHijo($$[$0-2]); si.agregarHijo(new Parser.yy.Nodo($$[$0-1],"par_c",yylineno)); si.agregarHijo(new Parser.yy.Nodo($$[$0],"dos_p",yylineno)); this.$.agregarHijo(si);
 break;
 case 50:
 this.$ = new Parser.yy.Nodo("SINO","",yylineno); this.$.agregarHijo(new Parser.yy.Nodo($$[$0-1],"sino",yylineno)); this.$.agregarHijo(new Parser.yy.Nodo($$[$0],"dos_p",yylineno));

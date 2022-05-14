@@ -214,7 +214,7 @@ MOSTRAR
 ;
 
 SI
-	: si par_a EXP par_c dos_p		{$$ = new Parser.yy.Nodo("SI","",yylineno); $$.agregarHijo(new Parser.yy.Nodo($1,"si",yylineno)); $$.agregarHijo(new Parser.yy.Nodo($2,"par_a",yylineno)); $$.agregarHijo($3); $$.agregarHijo(new Parser.yy.Nodo($4,"par_c",yylineno)); $$.agregarHijo(new Parser.yy.Nodo($5,"dos_p",yylineno));}		
+	: si par_a EXP par_c dos_p		{$$ = new Parser.yy.Nodo("INSTRUCCION_SI","",yylineno); let si = new Parser.yy.Nodo("SI","",yylineno); si.agregarHijo(new Parser.yy.Nodo($1,"si",yylineno)); si.agregarHijo(new Parser.yy.Nodo($2,"par_a",yylineno)); si.agregarHijo($3); si.agregarHijo(new Parser.yy.Nodo($4,"par_c",yylineno)); si.agregarHijo(new Parser.yy.Nodo($5,"dos_p",yylineno)); $$.agregarHijo(si);}		
 ;
 
 SINO

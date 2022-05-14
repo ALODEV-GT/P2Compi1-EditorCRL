@@ -9,7 +9,7 @@ export class Agrupador {
         let numTabsAnterior: number;
         while (nodo != null) {
             let tipo: string = nodo.valor.hijos[0].valor;
-            if (tipo == "MIENTRAS" || tipo == "SI" || tipo == "SINO"
+            if (tipo == "MIENTRAS" || tipo == "INSTRUCCION_SI" || tipo == "SINO"
                 || tipo == "DECLARACION_FUN" || tipo == "PARA" || tipo == "FUNCION_PRINCIPAL") {
                 let anterior: Nodo | null = nodo.anterior;
                 if (anterior != null) {
@@ -18,11 +18,20 @@ export class Agrupador {
                         while (anterior != null && seguir) {
                             if (anterior.numTabs == numTabsAnterior) {
                                 anterior.hijo = true;
-                                if(nodo.valor.hijos[0].hijos[nodo.valor.hijos[0].hijos.length-1].valor == "INSTRUCCIONES"){
-                                    nodo.valor.hijos[0].hijos[nodo.valor.hijos[0].hijos.length-1].agregarHijo(anterior.valor);
-                                }else{
-                                    nodo.valor.hijos[0].agregarHijo(new NodoAST("INSTRUCCIONES","","0"));
-                                    nodo.valor.hijos[0].hijos[nodo.valor.hijos[0].hijos.length-1].agregarHijo(anterior.valor);
+                                if (tipo == "INSTRUCCION_SI") {
+                                    if (nodo.valor.hijos[0].hijos[0].hijos[nodo.valor.hijos[0].hijos[0].hijos.length - 1].valor == "INSTRUCCIONES") {
+                                        nodo.valor.hijos[0].hijos[0].hijos[nodo.valor.hijos[0].hijos[0].hijos.length - 1].agregarHijo(anterior.valor);
+                                    } else {
+                                        nodo.valor.hijos[0].hijos[0].agregarHijo(new NodoAST("INSTRUCCIONES", "", "0"));
+                                        nodo.valor.hijos[0].hijos[0].hijos[nodo.valor.hijos[0].hijos[0].hijos.length - 1].agregarHijo(anterior.valor);
+                                    }
+                                } else {
+                                    if (nodo.valor.hijos[0].hijos[nodo.valor.hijos[0].hijos.length - 1].valor == "INSTRUCCIONES") {
+                                        nodo.valor.hijos[0].hijos[nodo.valor.hijos[0].hijos.length - 1].agregarHijo(anterior.valor);
+                                    } else {
+                                        nodo.valor.hijos[0].agregarHijo(new NodoAST("INSTRUCCIONES", "", "0"));
+                                        nodo.valor.hijos[0].hijos[nodo.valor.hijos[0].hijos.length - 1].agregarHijo(anterior.valor);
+                                    }
                                 }
                             } else if (anterior.numTabs < numTabsAnterior) {
                                 seguir = false;
