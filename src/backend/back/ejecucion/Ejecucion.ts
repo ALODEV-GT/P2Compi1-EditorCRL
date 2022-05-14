@@ -42,6 +42,8 @@ import { Asignacion } from './Declaraciones/Asignacion';
 import { For } from './Instrucciones/For';
 import { Mostrar } from './Instrucciones/Mostrar';
 import { LlamadaFuncion } from './Funciones/LLamadaFuncion';
+import { InstruccionSi } from './Instrucciones/InstruccionSi';
+import { Si } from './Instrucciones/Si';
 export class Ejecucion {
     _raiz: NodoAST;
     _contador: number = 0;
@@ -543,14 +545,44 @@ export class Ejecucion {
 
         //----------------------------> aun faltan
 
+        //INSTRUCCION_SI
+        if (nodo.valor == "INSTRUCCION_SI") {
+            switch (nodo.hijos.length) {
+                case 1: {
+
+                    //SI
+                    const inst = this.recorrer(nodo.hijos[0]);
+                    return new InstruccionSi([inst], nodo.linea);
+                }
+                case 2: {
+                    //SI SINO
+                    const si = this.recorrer(nodo.hijos[0]);
+                    const sino = this.recorrer(nodo.hijos[1]);
+                    return new InstruccionSi([si, sino], nodo.linea);
+                }
+            }
+        }
+
         //SI
         if (nodo.valor == "SI") {
-            console.log("Nodo INSTRUCCION_SI");
+            //si par_a EXP par_c dos_p
+            const condicion = this.recorrer(nodo.hijos[2]);
+            let instrucciones: Instruccion[]=[];
+            if(nodo.hijos.length == 6){
+                instrucciones = this.recorrer(nodo.hijos[5]);
+            }
+            return new Si(condicion, instrucciones);
         }
 
         //SINO
         if (nodo.valor == "SINO") {
-            console.log("Nodo INSTRUCCION_SINO");
+            //sino dos_p
+            const condicion = new Boolean(true, nodo.linea);
+            let instrucciones: Instruccion[]=[];
+            if(nodo.hijos.length == 3){
+                instrucciones = this.recorrer(nodo.hijos[2]);
+            }
+            return new Si(condicion, instrucciones);
         }
     }
 

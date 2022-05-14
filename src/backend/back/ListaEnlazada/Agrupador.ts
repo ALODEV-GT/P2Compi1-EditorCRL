@@ -9,7 +9,6 @@ export class Agrupador {
         let numTabsAnterior: number;
 
         this.agruparIfElse(raiz);
-        console.log("Si pase");
 
         while (nodo != null) {
             let tipo: string = nodo.valor.hijos[0].valor;
@@ -55,7 +54,6 @@ export class Agrupador {
         let seguir: boolean = true;
         while (nodo != null) {
             let tipo: string = nodo.valor.hijos[0].valor;
-            console.log(nodo);
 
             if (tipo == "INSTRUCCION_SI") {
                 let ifActual: NodoAST = nodo.valor.hijos[0];
@@ -68,8 +66,6 @@ export class Agrupador {
                             ifActual.agregarHijo(anterior.valor.hijos[0]);
                             anterior.usado = true;
                             seguir = false;
-                            console.log("Agregue el sino");
-
                         } else if ((anterior.numTabs == nodo.numTabs && tipoAnterior != "SINO") || anterior.numTabs < nodo.numTabs) {
                             seguir = false;
                         }
