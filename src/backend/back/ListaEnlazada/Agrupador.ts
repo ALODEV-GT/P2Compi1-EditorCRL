@@ -7,6 +7,10 @@ export class Agrupador {
         let nodo: Nodo | null = raiz;
         let seguir: boolean = true;
         let numTabsAnterior: number;
+
+        this.agruparIfElse(raiz);
+        console.log("Si pase");
+
         while (nodo != null) {
             let tipo: string = nodo.valor.hijos[0].valor;
             if (tipo == "MIENTRAS" || tipo == "INSTRUCCION_SI" || tipo == "SINO"
@@ -16,7 +20,7 @@ export class Agrupador {
                     numTabsAnterior = anterior.numTabs;
                     if (numTabsAnterior > nodo.numTabs) {
                         while (anterior != null && seguir) {
-                            if (anterior.numTabs == numTabsAnterior) {
+                            if (anterior.numTabs == numTabsAnterior && anterior.usado == false) {
                                 anterior.hijo = true;
                                 if (tipo == "INSTRUCCION_SI") {
                                     if (nodo.valor.hijos[0].hijos[0].hijos[nodo.valor.hijos[0].hijos[0].hijos.length - 1].valor == "INSTRUCCIONES") {
@@ -46,11 +50,49 @@ export class Agrupador {
         }
     }
 
+    agruparIfElse(raiz: Nodo | null) {
+        let nodo: Nodo | null = raiz;
+        let seguir: boolean = true;
+        while (nodo != null) {
+            let tipo: string = nodo.valor.hijos[0].valor;
+            console.log(nodo);
+
+            if (tipo == "INSTRUCCION_SI") {
+                let ifActual: NodoAST = nodo.valor.hijos[0];
+                let anterior: Nodo | null = nodo.anterior;
+                while (anterior != null && seguir) {
+                    let tipoAnterior: string = anterior.valor.hijos[0].valor;
+
+                    if (tipoAnterior != "INSTRUCCION_SI") {
+                        if (anterior.numTabs == nodo.numTabs && tipoAnterior == "SINO") {
+                            ifActual.agregarHijo(anterior.valor.hijos[0]);
+                            anterior.usado = true;
+                            seguir = false;
+                            console.log("Agregue el sino");
+
+                        } else if ((anterior.numTabs == nodo.numTabs && tipoAnterior != "SINO") || anterior.numTabs < nodo.numTabs) {
+                            seguir = false;
+                        }
+                    } else {
+                        if (anterior.numTabs == nodo.numTabs) {
+                            seguir = false;
+                        }
+                    }
+                    anterior = anterior.anterior;
+                }
+            }
+            seguir = true;
+            nodo = nodo.anterior;
+        }
+    }
+
     agruparArbol(nodo: Nodo | null, linea: string): NodoAST {
         let instrucciones: NodoAST = new NodoAST("INSTRUCCIONES", "", linea);
         while (nodo != null) {
             if (!nodo.hijo) {
-                instrucciones.agregarHijo(nodo.valor);
+                if (!nodo.usado) {
+                    instrucciones.agregarHijo(nodo.valor);
+                }
             }
             nodo = nodo.anterior;
         }

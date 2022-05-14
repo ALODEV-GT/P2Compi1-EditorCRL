@@ -5,6 +5,14 @@ export class Nodo {
     private _numTabs: number;
     private _siguiente: Nodo | null = null;
     private _hijo: boolean = false;
+    private _usado: boolean = false;
+    
+    public get usado(): boolean {
+        return this._usado;
+    }
+    public set usado(value: boolean) {
+        this._usado = value;
+    }
 
     constructor(valor: NodoAST, numTabs: number) {
         this._valor = valor;
