@@ -22,7 +22,7 @@ export class Suma extends Instruccion {
         const exp2 = this._expDer.ejecutar(e);
 
         if (exp1 == null || exp2 == null) {
-            Errores.getInstance().push(new Error("Semantico", this._linea, "No se puede realizar una suma con null"));
+            Errores.getInstance().push(new Error("semantico", this._linea, "No se puede realizar una suma con null"));
             return;
         }
 
@@ -61,7 +61,7 @@ export class Suma extends Instruccion {
 
             //Boolean + Char
             if (exp2 instanceof Char) {
-                Errores.getInstance().push(new Error("Sintactico", this._linea, "No se puede sumar Boolean con un Char"));
+                Errores.getInstance().push(new Error("semantico", this._linea, "No se puede sumar Boolean con un Char"));
             }
         }
 
@@ -194,7 +194,7 @@ export class Suma extends Instruccion {
         if (exp1 instanceof Char) {
             //Char + Boolean
             if (exp2 instanceof Boolean) {
-                Errores.getInstance().push(new Error("Sintactico", this._linea, "No se puede sumar Char con un Boolean"));
+                Errores.getInstance().push(new Error("semantico", this._linea, "No se puede sumar Char con un Boolean"));
             }
 
             //Char + Double

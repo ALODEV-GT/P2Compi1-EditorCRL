@@ -10,6 +10,6 @@ export class Error {
     }
 
     infoError(){
-        return `Error ${this._tipo}: Linea: ${this._linea}, ${this._descripcion}`
+        return `Error ${this._tipo}: Linea: ${this._linea}, ${this._descripcion}.`
     }
 }
