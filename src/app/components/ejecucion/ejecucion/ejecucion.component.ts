@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Consola } from 'src/backend/front/Consola';
 import { ManejadorEjecucion } from '../../../../backend/front/ManejadorEjecucion';
 
 @Component({
