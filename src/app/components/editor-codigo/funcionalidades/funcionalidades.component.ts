@@ -8,6 +8,7 @@ import { Agrupador } from '../../../../backend/back/ListaEnlazada/Agrupador';
 import { Ejecucion } from '../../../../backend/back/ejecucion/Ejecucion';
 import { graphviz } from 'd3-graphviz';
 import { Salida } from 'src/backend/back/ejecucion/Salida';
+import { Errores } from 'src/backend/back/ejecucion/Errores/Errores';
 
 declare var require: any;
 const myParser = require("./../../../../backend/back/analizador/grammar.js");
@@ -35,6 +36,7 @@ export class FuncionalidadesComponent implements OnInit {
   ventanaActiva: ManejadorEjecucion = new ManejadorEjecucion();
 
   lista: any[] = [];
+  listaErr: any[] = [];
 
   agregarVentana() {
     this.proyectos.push(new Proyecto("", this.contadorVentanas.contador));
@@ -107,6 +109,7 @@ export class FuncionalidadesComponent implements OnInit {
 
   ejecutar() {
     Salida.getInstance().clear();
+    Errores.getInstance().clear();
     try {
       console.log("Contenido a analizar:");
       console.log(this.proyecto.contenido);
@@ -122,6 +125,7 @@ export class FuncionalidadesComponent implements OnInit {
     }
 
     this.lista = Salida.getInstance().lista;
+    this.listaErr = Errores.getInstance().lista;
   }
 
 

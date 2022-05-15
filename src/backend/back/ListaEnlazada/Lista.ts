@@ -26,4 +26,8 @@ export class Lista {
     public get raiz(): Nodo | null {
         return this._raiz;
     }
+
+    public limpiar(){
+        this._raiz = null;
+    }
 }

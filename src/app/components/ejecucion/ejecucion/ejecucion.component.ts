@@ -13,12 +13,13 @@ export class EjecucionComponent implements OnInit {
 
   @Input() ventanaActiva!: ManejadorEjecucion;
   @Input() lista!: any[];
+  @Input() listaErr!: any[];
   TERMINAL: number = 1;
   ERRORES: number = 2;
   IMAGENES: number = 3;
 
   ngOnInit(): void {
-    
+
   }
 
 }

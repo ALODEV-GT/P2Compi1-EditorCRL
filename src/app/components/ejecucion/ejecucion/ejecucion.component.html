@@ -2,7 +2,7 @@
     <app-terminal [lista]="lista"></app-terminal>
 </div>
 <div *ngIf="this.ventanaActiva.ventanaActiva == this.ERRORES">
-    <app-reporte-errores></app-reporte-errores>
+    <app-reporte-errores [listaErr]="listaErr"></app-reporte-errores>
 </div>
 <div *ngIf="this.ventanaActiva.ventanaActiva == this.IMAGENES">
     <app-imagenes></app-imagenes>

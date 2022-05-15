@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-reporte-errores',
@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ReporteErroresComponent implements OnInit {
 
+  @Input() listaErr!: any[];
+  
   constructor() { }
 
   ngOnInit(): void {

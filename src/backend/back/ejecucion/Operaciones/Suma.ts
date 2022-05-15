@@ -37,8 +37,10 @@ export class Suma extends Instruccion {
             console.log("Si entre a sumar los enteros");
             
             let valor1: number = exp1.valor_1;
-            let valor2: number = exp1.valor_1;
+            let valor2: number = exp2.valor_1;
             let suma = valor1 + valor2;
+            console.log("La suma es: " + suma);
+            
             return new Entero(suma, this._linea);
         }
 
