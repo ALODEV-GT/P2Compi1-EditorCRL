@@ -17,10 +17,8 @@ export class Potencia extends Instruccion {
         this._expDer = expDer;
     }
 
-    //Math.pow(5, 2))
-    // b, e
 
-      ejecutar(e: Entorno) {
+    ejecutar(e: Entorno) {
         const exp1 = this._expIzq.ejecutar(e);
         const exp2 = this._expDer.ejecutar(e);
 
@@ -39,8 +37,8 @@ export class Potencia extends Instruccion {
             if (exp2 instanceof Decimal) {
                 let valor1: number = exp1.valorNumerico();
                 let valor2: number = exp2.valor_1;
-                let resultado = valor1 % valor2;
-                return new Decimal(resultado, this._linea);
+                let potencia = Math.pow(valor1, valor2);
+                return new Decimal(potencia, this._linea);
             }
 
             //Boolean % String
@@ -52,8 +50,8 @@ export class Potencia extends Instruccion {
             if (exp2 instanceof Entero) {
                 let valor1: number = exp1.valorNumerico();
                 let valor2: number = exp2.valor_1;
-                let resultado = valor1 % valor2;
-                return new Decimal(resultado, this._linea);
+                let potencia = Math.pow(valor1, valor2);
+                return new Decimal(potencia, this._linea);
             }
 
             //Boolean % Char
@@ -67,16 +65,16 @@ export class Potencia extends Instruccion {
             if (exp2 instanceof Boolean) {
                 let valor1: number = exp1.valor_1;
                 let valor2: number = exp2.valorNumerico();
-                let resultado = valor1 % valor2;
-                return new Decimal(resultado, this._linea);
+                let potencia = Math.pow(valor1, valor2);
+                return new Decimal(potencia, this._linea);
             }
 
             //Double % Double
             if (exp2 instanceof Decimal) {
                 let valor1: number = exp1.valor_1;
                 let valor2: number = exp2.valor_1;
-                let resultado = valor1 % valor2;
-                return new Decimal(resultado, this._linea);
+                let potencia = Math.pow(valor1, valor2);
+                return new Decimal(potencia, this._linea);
             }
 
             //Double % String
@@ -88,16 +86,16 @@ export class Potencia extends Instruccion {
             if (exp2 instanceof Entero) {
                 let valor1: number = exp1.valor_1;
                 let valor2: number = exp2.valor_1;
-                let resultado = valor1 % valor2;
-                return new Decimal(resultado, this._linea);
+                let potencia = Math.pow(valor1, valor2);
+                return new Decimal(potencia, this._linea);
             }
 
             //Double % Char
             if (exp2 instanceof Char) {
                 let valor1: number = exp1.valor_1;
                 let valor2: number = exp2.valorNumerico();
-                let resultado = valor1 % valor2;
-                return new Decimal(resultado, this._linea);
+                let potencia = Math.pow(valor1, valor2);
+                return new Decimal(potencia, this._linea);
             }
         }
 
@@ -133,16 +131,16 @@ export class Potencia extends Instruccion {
             if (exp2 instanceof Boolean) {
                 let valor1: number = exp1.valor_1;
                 let valor2: number = exp2.valorNumerico();
-                let resultado = valor1 % valor2;
-                return new Decimal(resultado, this._linea);
+                let potencia = Math.pow(valor1, valor2);
+                return new Decimal(potencia, this._linea);
             }
 
             //Int % Double
             if (exp2 instanceof Decimal) {
                 let valor1: number = exp1.valor_1;
                 let valor2: number = exp2.valor_1;
-                let resultado = valor1 % valor2;
-                return new Decimal(resultado, this._linea);
+                let potencia = Math.pow(valor1, valor2);
+                return new Decimal(potencia, this._linea);
             }
 
             //Int % String
@@ -154,16 +152,16 @@ export class Potencia extends Instruccion {
             if (exp2 instanceof Entero) {
                 let valor1: number = exp1.valor_1;
                 let valor2: number = exp2.valor_1;
-                let resultado = valor1 % valor2;
-                return new Decimal(resultado, this._linea);
+                let potencia = Math.pow(valor1, valor2);
+                return new Entero(potencia, this._linea);
             }
 
             //Int % Char
             if (exp2 instanceof Char) {
                 let valor1: number = exp1.valor_1;
                 let valor2: number = exp2.valorNumerico();
-                let resultado = valor1 % valor2;
-                return new Decimal(resultado, this._linea);
+                let potencia = Math.pow(valor1, valor2);
+                return new Entero(potencia, this._linea);
             }
         }
 
@@ -177,8 +175,8 @@ export class Potencia extends Instruccion {
             if (exp2 instanceof Decimal) {
                 let valor1: number = exp1.valorNumerico();
                 let valor2: number = exp2.valor_1;
-                let resultado = valor1 % valor2;
-                return new Decimal(resultado, this._linea);
+                let potencia = Math.pow(valor1, valor2);
+                return new Decimal(potencia, this._linea);
             }
 
             //Char % String
@@ -190,16 +188,16 @@ export class Potencia extends Instruccion {
             if (exp2 instanceof Entero) {
                 let valor1: number = exp1.valorNumerico();
                 let valor2: number = exp2.valor_1;
-                let resultado = valor1 % valor2;
-                return new Decimal(resultado, this._linea);
+                let potencia = Math.pow(valor1, valor2);
+                return new Decimal(potencia, this._linea);
             }
 
             //Char % Char
             if (exp2 instanceof Char) {
                 let valor1: number = exp1.valorNumerico();
                 let valor2: number = exp2.valorNumerico();
-                let resultado = valor1 % valor2;
-                return new Decimal(resultado, this._linea);
+                let potencia = Math.pow(valor1, valor2);
+                return new Decimal(potencia, this._linea);
             }
         }
 

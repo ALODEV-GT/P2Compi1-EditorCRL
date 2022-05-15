@@ -36,8 +36,8 @@ export class Resta extends Instruccion {
             if (exp2 instanceof Decimal) {
                 let valor1: number = exp1.valorNumerico();
                 let valor2: number = exp2.valor_1;
-                let suma = valor1 - valor2;
-                return new Decimal(suma, this._linea);
+                let resta = valor1 - valor2;
+                return new Decimal(resta, this._linea);
             }
 
             //Boolean - String
@@ -49,8 +49,8 @@ export class Resta extends Instruccion {
             if (exp2 instanceof Entero) {
                 let valor1: number = exp1.valorNumerico();
                 let valor2: number = exp2.valor_1;
-                let suma = valor1 - valor2;
-                return new Entero(suma, this._linea);
+                let resta = valor1 - valor2;
+                return new Entero(resta, this._linea);
             }
 
             //Boolean - Char
@@ -64,16 +64,16 @@ export class Resta extends Instruccion {
             if (exp2 instanceof Boolean) {
                 let valor1: number = exp1.valor_1;
                 let valor2: number = exp2.valorNumerico();
-                let suma = valor1 - valor2;
-                return new Decimal(suma, this._linea);
+                let resta = valor1 - valor2;
+                return new Decimal(resta, this._linea);
             }
 
             //Double - Double
             if (exp2 instanceof Decimal) {
                 let valor1: number = exp1.valor_1;
                 let valor2: number = exp2.valor_1;
-                let suma = valor1 - valor2;
-                return new Decimal(suma, this._linea);
+                let resta = valor1 - valor2;
+                return new Decimal(resta, this._linea);
             }
 
             //Double - String
@@ -85,16 +85,16 @@ export class Resta extends Instruccion {
             if (exp2 instanceof Entero) {
                 let valor1: number = exp1.valor_1;
                 let valor2: number = exp2.valor_1;
-                let suma = valor1 - valor2;
-                return new Decimal(suma, this._linea);
+                let resta = valor1 - valor2;
+                return new Decimal(resta, this._linea);
             }
 
             //Double - Char
             if (exp2 instanceof Char) {
                 let valor1: number = exp1.valor_1;
                 let valor2: number = exp2.valorNumerico();
-                let suma = valor1 - valor2;
-                return new Decimal(suma, this._linea);
+                let resta = valor1 - valor2;
+                return new Decimal(resta, this._linea);
             }
         }
 
@@ -130,16 +130,16 @@ export class Resta extends Instruccion {
             if (exp2 instanceof Boolean) {
                 let valor1: number = exp1.valor_1;
                 let valor2: number = exp2.valorNumerico();
-                let suma = valor1 - valor2;
-                return new Entero(suma, this._linea);
+                let resta = valor1 - valor2;
+                return new Entero(resta, this._linea);
             }
 
             //Int - Double
             if (exp2 instanceof Decimal) {
                 let valor1: number = exp1.valor_1;
                 let valor2: number = exp2.valor_1;
-                let suma = valor1 - valor2;
-                return new Decimal(suma, this._linea);
+                let resta = valor1 - valor2;
+                return new Decimal(resta, this._linea);
             }
 
             //Int - String
@@ -151,16 +151,16 @@ export class Resta extends Instruccion {
             if (exp2 instanceof Entero) {
                 let valor1: number = exp1.valor_1;
                 let valor2: number = exp2.valor_1;
-                let suma = valor1 - valor2;
-                return new Entero(suma, this._linea);
+                let resta = valor1 - valor2;
+                return new Entero(resta, this._linea);
             }
 
             //Int - Char
             if (exp2 instanceof Char) {
                 let valor1: number = exp1.valor_1;
                 let valor2: number = exp2.valorNumerico();
-                let suma = valor1 - valor2;
-                return new Entero(suma, this._linea);
+                let resta = valor1 - valor2;
+                return new Entero(resta, this._linea);
             }
         }
 
@@ -174,8 +174,8 @@ export class Resta extends Instruccion {
             if (exp2 instanceof Decimal) {
                 let valor1: number = exp1.valorNumerico();
                 let valor2: number = exp2.valor_1;
-                let suma = valor1 - valor2;
-                return new Decimal(suma, this._linea);
+                let resta = valor1 - valor2;
+                return new Decimal(resta, this._linea);
             }
 
             //Char - String
@@ -187,16 +187,16 @@ export class Resta extends Instruccion {
             if (exp2 instanceof Entero) {
                 let valor1: number = exp1.valorNumerico();
                 let valor2: number = exp2.valor_1;
-                let suma = valor1 - valor2;
-                return new Entero(suma, this._linea);
+                let resta = valor1 - valor2;
+                return new Entero(resta, this._linea);
             }
 
             //Char - Char
             if (exp2 instanceof Char) {
                 let valor1: number = exp1.valorNumerico();
                 let valor2: number = exp2.valorNumerico();
-                let suma = valor1 - valor2;
-                return new Entero(suma, this._linea);
+                let resta = valor1 - valor2;
+                return new Entero(resta, this._linea);
             }
         }
 
