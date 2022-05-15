@@ -22,8 +22,8 @@ export class Menor extends Instruccion {
         const exp2 = this._expDer.ejecutar(e);
 
         if (exp1 instanceof Boolean && exp2 instanceof Boolean) {
-            let valor1 = exp1.valorNumerico;
-            let valor2 = exp2.valorNumerico;
+            let valor1 = exp1.valorNumerico();
+            let valor2 = exp2.valorNumerico();
             let resultado = valor1 < valor2;
             return new Boolean(resultado, this._linea);
         } else if (exp1 instanceof Decimal && exp2 instanceof Decimal) {
@@ -36,12 +36,8 @@ export class Menor extends Instruccion {
             let valor2 = exp2.valor;
             let resultado = false;
 
-            if(valor1.length < valor2.length){
-                if(valor1){
+            //Pendiente
 
-                }
-            }
-            
             return new Boolean(resultado, this._linea);
         } else if (exp1 instanceof Entero && exp2 instanceof Entero) {
             let valor1 = exp1.valor_1;
