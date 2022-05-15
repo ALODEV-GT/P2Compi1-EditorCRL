@@ -26,7 +26,8 @@ export class Igual extends Instruccion {
             let valor2 = exp2.valor_1;
             let resultado = valor1 == valor2;
             return new Boolean(resultado, this._linea);
-        } else if (exp1 instanceof Decimal && exp2 instanceof Decimal) {
+        } else if ((exp1 instanceof Decimal && exp2 instanceof Decimal) ||
+            (exp1 instanceof Decimal && exp2 instanceof Entero)) {
             let valor1 = exp1.valor_1;
             let valor2 = exp2.valor_1;
             let resultado = valor1 == valor2;
@@ -36,7 +37,8 @@ export class Igual extends Instruccion {
             let valor2 = exp2.valor;
             let resultado = valor1 == valor2;
             return new Boolean(resultado, this._linea);
-        } else if (exp1 instanceof Entero && exp2 instanceof Entero) {
+        } else if ((exp1 instanceof Entero && exp2 instanceof Entero) ||
+            (exp1 instanceof Entero && exp2 instanceof Decimal)) {
             let valor1 = exp1.valor_1;
             let valor2 = exp2.valor_1;
             let resultado = valor1 == valor2;

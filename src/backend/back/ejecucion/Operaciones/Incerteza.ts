@@ -24,7 +24,8 @@ export class Incerteza extends Instruccion {
 
         if (exp1 instanceof Boolean && exp2 instanceof Boolean) {
             Errores.getInstance().push(new Error("Semantico", this._linea, "No se puede realizar la incerteza entre Boolean"));
-        } else if (exp1 instanceof Decimal && exp2 instanceof Decimal) {
+        } else if ((exp1 instanceof Decimal && exp2 instanceof Decimal) ||
+        (exp1 instanceof Decimal && exp2 instanceof Entero)) {
             let valor1 = exp1.valor_1;
             let valor2 = exp2.valor_1;
             let resultado = false;
@@ -40,7 +41,8 @@ export class Incerteza extends Instruccion {
             //Pendiente
 
             return new Boolean(resultado, this._linea);
-        } else if (exp1 instanceof Entero && exp2 instanceof Entero) {
+        } else if ((exp1 instanceof Entero && exp2 instanceof Entero) ||
+        (exp1 instanceof Entero && exp2 instanceof Decimal)) {
             let valor1 = exp1.valor_1;
             let valor2 = exp2.valor_1;
             let resultado = false;

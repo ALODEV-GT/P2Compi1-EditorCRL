@@ -7,4 +7,12 @@ export class Si {
         this._condicion = condicion;
         this._instrucciones = instrucciones;
     }
+
+    public get condicion(): Instruccion {
+        return this._condicion;
+    }
+
+    public get instrucciones(): Array<Instruccion> {
+        return this._instrucciones;
+    }
 }
