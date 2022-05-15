@@ -1,7 +1,9 @@
 import { Entorno } from '../Entorno';
 import { Instruccion } from '../Instruccion';
 import { Salida } from '../Salida';
+import { Decimal } from '../Valores/Decimal';
 import { Entero } from '../Valores/Entero';
+import { Cadena } from '../Valores/Cadena';
 export class Mostrar extends Instruccion {
     private _expresiones: Instruccion[];
 
@@ -13,10 +15,12 @@ export class Mostrar extends Instruccion {
     ejecutar(e: Entorno) {
         this._expresiones.forEach(inst => {
             let res = inst.ejecutar(e);
-            console.log("La res es: " + res);
-            let salida ='null';
-            if(res instanceof Entero){
+            let salida = 'null';
+            if (res instanceof Entero || res instanceof Decimal) {
                 salida = res.valor_1.toString();
+            }
+            if (res instanceof Cadena) {
+                salida = res.valor;
             }
 
             Salida.getInstance().push(salida)

@@ -111,13 +111,10 @@ export class FuncionalidadesComponent implements OnInit {
     Salida.getInstance().clear();
     Errores.getInstance().clear();
     try {
-      console.log("Contenido a analizar:");
-      console.log(this.proyecto.contenido);
-      
       let raiz: NodoAST = myParser.parse(this.proyecto.contenido);
       let ejecucion: Ejecucion = new Ejecucion(raiz);
-      let str3: string = ejecucion.getDot();
-      graphviz('div').renderDot(str3);
+      // let str3: string = ejecucion.getDot();
+      // graphviz('div').renderDot(str3);
       ejecucion.ejecutar();
       console.log('analizado y ejecutado');
     } catch (error) {

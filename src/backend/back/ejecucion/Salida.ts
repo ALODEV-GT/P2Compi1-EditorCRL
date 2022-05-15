@@ -19,7 +19,5 @@ export class Salida {
 
     public clear(): void {
         this.lista = [];
-        console.log("lista limpiada");
-        
     }
 }

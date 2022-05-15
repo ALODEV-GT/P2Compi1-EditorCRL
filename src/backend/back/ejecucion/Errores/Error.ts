@@ -8,4 +8,8 @@ export class Error {
         this._linea = linea;
         this._descripcion = descripcion;
     }
+
+    infoError(){
+        return `Error ${this._tipo}: Linea: ${this._linea}, ${this._descripcion}`
+    }
 }

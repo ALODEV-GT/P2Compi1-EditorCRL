@@ -25,4 +25,8 @@ export class Char extends Instruccion {
         return this._valor;
     }
 
+    valorNumerico(): number {
+        return this.valor.charCodeAt(0);
+    }
+
 }

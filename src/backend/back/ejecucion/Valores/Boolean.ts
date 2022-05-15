@@ -16,4 +16,14 @@ export class Boolean extends Instruccion {
         return this._valor;
     }
 
+    valorNumerico(): number {
+        let valor = (this.valor_1 == true) ? 1 : 0;
+        return valor;
+    }
+
+    valorString(): string {
+        let valor = (this.valor_1 == true) ? "true" : "false";
+        return valor;
+    }
+
 }
