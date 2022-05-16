@@ -1,6 +1,5 @@
 import { Instruccion } from "../Instruccion";
 import { TiposNativos } from '../Declaraciones/TiposNativo';
-import { Parametro } from "./Parametro";
 import { Entorno } from "../Entorno";
 import { NodoAST } from '../../arbol/NodoAST';
 import { Errores } from '../Errores/Errores';
@@ -45,7 +44,6 @@ export class DeclaracionFuncion extends Instruccion {
         }
 
         e.setFuncion(new Funcion(this._id, this._instrucciones, this._tipo, this._parametros));
-        console.log("Funcion declarada");
     }
 
 }

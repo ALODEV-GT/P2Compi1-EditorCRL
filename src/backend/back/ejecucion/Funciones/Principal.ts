@@ -1,6 +1,9 @@
 import { TiposNativos } from '../Declaraciones/TiposNativo';
 import { Entorno } from '../Entorno';
 import { Instruccion } from '../Instruccion';
+import { Errores } from '../Errores/Errores';
+import { Error } from '../Errores/Error';
+import { Funcion } from '../Declaraciones/Funcion';
 export class Principal extends Instruccion {
     private _tipo: TiposNativos
     private _id: string;
@@ -14,6 +17,14 @@ export class Principal extends Instruccion {
     }
 
     ejecutar(e: Entorno) {
-        throw new Error("Method not implemented.");
+        const funcion = e.getFuncion(this._id);
+        //Validación de funcion con nombre unico en el entorno
+        if (funcion) {
+            Errores.getInstance().push(new Error("semantico", this._linea, `Ya existe una funcion con el nombre ${this._id}`));
+            return;
+        }
+
+        e.setFuncion(new Funcion(this._id, this._instrucciones, this._tipo, []));
+        console.log("Funcion principal declarada");
     }
 }
