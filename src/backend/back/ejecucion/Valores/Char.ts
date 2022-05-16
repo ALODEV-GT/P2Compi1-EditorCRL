@@ -1,8 +1,10 @@
+import { TiposNativos } from '../Declaraciones/TiposNativo';
 import { Entorno } from '../Entorno';
 import { Instruccion } from '../Instruccion';
 export class Char extends Instruccion {
 
     private _valor: string;
+    private _tipo: TiposNativos = TiposNativos.CHAR;
 
     constructor(valor: string, linea: string) {
         super(linea);
@@ -27,6 +29,10 @@ export class Char extends Instruccion {
 
     valorNumerico(): number {
         return this.valor.charCodeAt(0);
+    }
+
+    public get tipo(): TiposNativos {
+        return this._tipo;
     }
 
 }

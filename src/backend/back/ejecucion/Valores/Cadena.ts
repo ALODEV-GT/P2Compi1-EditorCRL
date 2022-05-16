@@ -1,8 +1,10 @@
 import { Entorno } from '../Entorno';
 import { Instruccion } from '../Instruccion';
+import { TiposNativos } from '../Declaraciones/TiposNativo';
 export class Cadena extends Instruccion {
 
     private _valor: string;
+    private _tipo: TiposNativos = TiposNativos.STRING;
 
     constructor(valor: string, linea: string) {
         super(linea);
@@ -22,6 +24,10 @@ export class Cadena extends Instruccion {
 
     public get valor(): string {
         return this._valor;
+    }
+
+    public get tipo(): TiposNativos {
+        return this._tipo;
     }
 
 }

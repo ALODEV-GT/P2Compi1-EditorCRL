@@ -1,8 +1,10 @@
 import { Entorno } from '../Entorno';
 import { Instruccion } from '../Instruccion';
+import { TiposNativos } from '../Declaraciones/TiposNativo';
 export class Boolean extends Instruccion {
 
     private _valor: boolean;
+    private _tipo: TiposNativos = TiposNativos.BOOLEAN;
 
     constructor(valor: boolean, linea: string) {
         super(linea);
@@ -26,4 +28,7 @@ export class Boolean extends Instruccion {
         return valor;
     }
 
+    public get tipo(): TiposNativos {
+        return this._tipo;
+    }
 }

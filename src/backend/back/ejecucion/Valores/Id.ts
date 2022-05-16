@@ -1,5 +1,7 @@
 import { Entorno } from '../Entorno';
 import { Instruccion } from '../Instruccion';
+import { Errores } from '../Errores/Errores';
+import { Error } from '../Errores/Error';
 export class Id extends Instruccion {
     private _id: string;
 
@@ -9,7 +11,13 @@ export class Id extends Instruccion {
     }
 
     ejecutar(e: Entorno) {
-        return this;
+        const variable = e.getVariable(this._id);
+        if (variable) {
+            return variable.valor;
+        }
+
+        Errores.getInstance().push(new Error('semantico', this._linea, `No se encontra ningua variable con el id: ${this._id}`));
+        return null;
     }
 
     public get id(): string {

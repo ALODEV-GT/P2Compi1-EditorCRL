@@ -5,6 +5,7 @@ import { Decimal } from '../Valores/Decimal';
 import { Entero } from '../Valores/Entero';
 import { Cadena } from '../Valores/Cadena';
 import { Boolean } from '../Valores/Boolean';
+import { Char } from '../Valores/Char';
 export class Mostrar extends Instruccion {
     private _expresiones: Instruccion[];
 
@@ -26,6 +27,10 @@ export class Mostrar extends Instruccion {
 
             if (res instanceof Boolean) {
                 salida = res.valorString();
+            }
+
+            if(res instanceof Char){
+                salida = res.valor;
             }
 
             Salida.getInstance().push(salida)
