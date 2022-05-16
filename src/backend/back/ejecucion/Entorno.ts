@@ -77,7 +77,7 @@ export class Entorno {
     }
 
     getEntornoGlobal(): Entorno | null {
-        for (let e: Entorno | null= this; e != null; e = e.padre) {
+        for (let e: Entorno | null = this; e != null; e = e.padre) {
             if (e.padre == null) return e;
         }
         return null
@@ -111,5 +111,8 @@ export class Entorno {
     }
     public set funciones(value: Map<String, Funcion>) {
         this._funciones = value;
+    }
+    public set padre(value: Entorno | null) {
+        this._padre = value;
     }
 }

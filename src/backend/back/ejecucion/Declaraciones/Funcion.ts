@@ -6,7 +6,7 @@ export class Funcion {
     private _id: string;
     private _instrucciones: Array<Instruccion>;
     private _tipoReturn: TiposNativos;
-    private _parametros: Array<Variable>
+    private _parametros: Array<Variable>;
 
     constructor(id: string, instrucciones: Array<Instruccion>, tipoReturn: TiposNativos, parametros: Array<Variable>) {
         this._id = id;
@@ -39,5 +39,14 @@ export class Funcion {
     }
     public set instrucciones(value: Array<Instruccion>) {
         this._instrucciones = value;
+    }
+    public get parametros(): Array<Variable> {
+        return this._parametros;
+    }
+    public set parametros(value: Array<Variable>) {
+        this._parametros = value;
+    }
+    public get tipoReturn(): TiposNativos {
+        return this._tipoReturn;
     }
 }

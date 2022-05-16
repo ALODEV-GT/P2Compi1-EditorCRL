@@ -1,5 +1,6 @@
 import { Entorno } from '../Entorno';
 import { Instruccion } from '../Instruccion';
+import { InsRetorno } from './InsRetorno';
 export class Retorno extends Instruccion {
     private _valor: Instruccion | null;
 
@@ -9,6 +10,15 @@ export class Retorno extends Instruccion {
     }
 
     ejecutar(e: Entorno) {
-        throw new Error('Method not implemented.');
+        if (this.tieneValor()) {
+            const valor = this._valor?.ejecutar(e);
+            return new InsRetorno(this.tieneValor(), valor);
+        } else {
+            return new InsRetorno(this.tieneValor());
+        }
+    }
+
+    tieneValor(): boolean {
+        return this._valor != null ? true : false;
     }
 }
