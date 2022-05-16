@@ -106,6 +106,5 @@ export class Asignacion extends Instruccion {
         }
 
         variable.valor = valor;
-        console.log("Reasignacion realizada");
     }
 }

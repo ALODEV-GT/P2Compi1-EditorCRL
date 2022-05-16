@@ -31,7 +31,6 @@ export class DeclaracionVar extends Instruccion {
             }
 
             let valor = this._exp?.ejecutar(e);
-            console.log("Valor: " + valor);
 
             //Validar si se declara una variable de tipo VOID
             if (this._tipo == TiposNativos.VOID) {
@@ -121,14 +120,10 @@ export class DeclaracionVar extends Instruccion {
             if (valor != null) {
                 variable = new Variable(id, this._tipo, valor);
                 e.setVariable(variable);
-                console.log(`variable ${id} declarada`);
             } else {
                 variable = new Variable(id, this._tipo);
                 e.setVariable(variable);
-                console.log(`variable ${id} declarada`);
             }
-
-
         }
     }
 }
