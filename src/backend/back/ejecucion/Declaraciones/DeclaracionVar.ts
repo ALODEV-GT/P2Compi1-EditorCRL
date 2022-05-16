@@ -126,4 +126,8 @@ export class DeclaracionVar extends Instruccion {
             }
         }
     }
+
+    idInicial():string{
+        return this._ids[0];
+    }
 }

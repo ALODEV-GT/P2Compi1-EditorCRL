@@ -44,6 +44,7 @@ import { Mostrar } from './Instrucciones/Mostrar';
 import { LlamadaFuncion } from './Funciones/LLamadaFuncion';
 import { InstruccionSi } from './Instrucciones/InstruccionSi';
 import { Si } from './Instrucciones/Si';
+import { Variable } from './Declaraciones/Variable';
 export class Ejecucion {
     _raiz: NodoAST;
     _contador: number = 0;
@@ -475,7 +476,6 @@ export class Ejecucion {
             let instrucciones: Instruccion[] = [];
             let incremento: boolean;
             let variable: Instruccion | null = null;
-
             //para par_a TIPO_VARIABLE_NATIVA id asig EXP pyc EXP pyc OP par_c dos_p
             if (nodo.hijos.length >= 12) {
                 condicion = this.recorrer(nodo.hijos[7]);
@@ -487,15 +487,34 @@ export class Ejecucion {
                 variable = new DeclaracionVar(tipo, ids, exp, nodo.linea);
             } else { //para par_a ASIGNACION pyc EXP pyc OP par_c dos_p
                 condicion = this.recorrer(nodo.hijos[4]);
-                incremento = this.recorrer(nodo.hijos[6]);
                 variable = this.recorrer(nodo.hijos[2]);
+                incremento = this.recorrer(nodo.hijos[6]);
             }
 
             if (nodo.hijos.length == 13 || nodo.hijos.length == 10) {
                 instrucciones = this.recorrer(nodo.hijos[nodo.hijos.length - 1]);
             }
 
-            return new For(condicion, incremento, instrucciones, variable, nodo.linea);
+            let idInc: string = "";
+            if (variable instanceof DeclaracionVar) {
+                idInc = variable.idInicial();
+            } else if (variable instanceof Asignacion) {
+                idInc = variable.id;
+            }
+
+
+            let expIzq: Id = new Id(idInc, nodo.linea);
+            let expDer: Entero = new Entero(1, nodo.valor);
+            let exp: Instruccion;
+            let op: Asignacion;
+            if (incremento) {
+                exp = new Suma(expIzq, expDer, nodo.linea);
+                op = new Asignacion(idInc, exp, nodo.linea);
+            } else {
+                exp = new Resta(expIzq, expDer, nodo.linea);
+                op = new Asignacion(idInc, exp, nodo.linea);
+            }
+            return new For(condicion, op, instrucciones, variable, nodo.linea);
         }
 
         //OP
@@ -564,8 +583,8 @@ export class Ejecucion {
         if (nodo.valor == "SI") {
             //si par_a EXP par_c dos_p
             const condicion = this.recorrer(nodo.hijos[2]);
-            let instrucciones: Instruccion[]=[];
-            if(nodo.hijos.length == 6){
+            let instrucciones: Instruccion[] = [];
+            if (nodo.hijos.length == 6) {
                 instrucciones = this.recorrer(nodo.hijos[5]);
             }
             return new Si(condicion, instrucciones);
@@ -575,8 +594,8 @@ export class Ejecucion {
         if (nodo.valor == "SINO") {
             //sino dos_p
             const condicion = new Boolean(true, nodo.linea);
-            let instrucciones: Instruccion[]=[];
-            if(nodo.hijos.length == 3){
+            let instrucciones: Instruccion[] = [];
+            if (nodo.hijos.length == 3) {
                 instrucciones = this.recorrer(nodo.hijos[2]);
             }
             return new Si(condicion, instrucciones);

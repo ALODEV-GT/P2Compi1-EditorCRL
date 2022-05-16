@@ -107,4 +107,8 @@ export class Asignacion extends Instruccion {
 
         variable.valor = valor;
     }
+
+    public set id(value: string) {
+        this._id = value;
+    }
 }
