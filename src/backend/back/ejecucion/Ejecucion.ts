@@ -327,7 +327,7 @@ export class Ejecucion {
             //TIPO_VARIABLE_NATIVA id par_a par_c dos_p
             const tipo: TiposNativos = this.recorrer(nodo.hijos[0]);
             let id: string = (this.recorrer(nodo.hijos[1]) as Id).id;
-            let parametros: Parametro[] = [];
+            let parametros: Variable[] = [];
             let instrucciones: [] = [];
             //TIPO_VARIABLE_NATIVA id par_a LISTA_PARAMETROS par_c dos_p
             if (nodo.hijos.length >= 6) {
@@ -343,12 +343,14 @@ export class Ejecucion {
 
         //LISTA_PARAMETROS
         if (nodo.valor == "LISTA_PARAMETROS") {
-            let parametros: Parametro[] = [];
+            let parametros: Variable[] = [];
             switch (nodo.hijos.length) {
                 case 1:
+                    //LISTA_PARAMETROS coma PARAMETRO
                     parametros.push(this.recorrer(nodo.hijos[0]));
                     return parametros;
                 case 3:
+                    //PARAMETRO
                     parametros = parametros.concat(this.recorrer(nodo.hijos[0]));
                     parametros.push(this.recorrer(nodo.hijos[2]));
                     return parametros;
@@ -359,7 +361,7 @@ export class Ejecucion {
         if (nodo.valor == "PARAMETRO") {
             const tipo: TiposNativos = this.recorrer(nodo.hijos[0]);
             let id: string = (this.recorrer(nodo.hijos[1]) as Id).id;
-            return new Parametro(tipo, id, nodo.linea);
+            return new Variable(id, tipo);
         }
 
         //IDS

@@ -11,6 +11,7 @@ export class LlamadaFuncion extends Instruccion {
     }
 
     ejecutar(e: Entorno) {
-        throw new Error('Method not implemented.');
+        
+        
     }
 }

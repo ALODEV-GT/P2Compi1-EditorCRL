@@ -15,4 +15,8 @@ export class Parametro extends Instruccion {
     ejecutar(e: Entorno) {
         throw new Error('Method not implemented.');
     }
+
+    public get id(): string {
+        return this._id;
+    }
 }
