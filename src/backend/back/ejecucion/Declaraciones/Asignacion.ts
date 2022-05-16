@@ -43,7 +43,7 @@ export class Asignacion extends Instruccion {
             }
         } else if (variable.tipo == TiposNativos.DOUBLE) {
             if (valor instanceof Cadena) {
-                Errores.getInstance().push(new Error('semantico', this._linea, `No se puede asignar un String a la variable Double ${id}`));
+                Errores.getInstance().push(new Error('semantico', this._linea, `No se puede asignar un String a la variable Double.`));
                 return
             } else if (valor instanceof Decimal) {
                 //Sin acciones
@@ -56,23 +56,23 @@ export class Asignacion extends Instruccion {
             }
         } else if (variable.tipo == TiposNativos.BOOLEAN) {
             if (valor instanceof Cadena) {
-                Errores.getInstance().push(new Error('semantico', this._linea, `No se puede asignar un String a la variable Boolean ${id}`));
+                Errores.getInstance().push(new Error('semantico', this._linea, `No se puede asignar un String a la variable Boolean.`));
                 return
             } else if (valor instanceof Decimal) {
-                Errores.getInstance().push(new Error('semantico', this._linea, `No se puede asignar un Double a la variable Boolean ${id}`));
+                Errores.getInstance().push(new Error('semantico', this._linea, `No se puede asignar un Double a la variable Boolean.`));
                 return
             } else if (valor instanceof Boolean) {
                 //Sin acciones
             } else if (valor instanceof Entero) {
-                Errores.getInstance().push(new Error('semantico', this._linea, `No se puede asignar un Int a la variable Boolean ${id}`));
+                Errores.getInstance().push(new Error('semantico', this._linea, `No se puede asignar un Int a la variable Boolean.`));
                 return
             } else if (valor instanceof Char) {
-                Errores.getInstance().push(new Error('semantico', this._linea, `No se puede asignar un Char a la variable Boolean ${id}`));
+                Errores.getInstance().push(new Error('semantico', this._linea, `No se puede asignar un Char a la variable Boolean.`));
                 return
             }
         } else if (variable.tipo == TiposNativos.INT) {
             if (valor instanceof Cadena) {
-                Errores.getInstance().push(new Error('semantico', this._linea, `No se puede asignar un String a la variable Int ${id}`));
+                Errores.getInstance().push(new Error('semantico', this._linea, `No se puede asignar un String a la variable Int.`));
                 return
             } else if (valor instanceof Decimal) {
                 let conv = ~~(valor.valor_1);
@@ -86,13 +86,13 @@ export class Asignacion extends Instruccion {
             }
         } else if (variable.tipo == TiposNativos.CHAR) {
             if (valor instanceof Cadena) {
-                Errores.getInstance().push(new Error('semantico', this._linea, `No se puede asignar un String a la variable Char ${id}`));
+                Errores.getInstance().push(new Error('semantico', this._linea, `No se puede asignar un String a la variable Char.`));
                 return
             } else if (valor instanceof Decimal) {
-                Errores.getInstance().push(new Error('semantico', this._linea, `No se puede asignar un Double a la variable Char ${id}`));
+                Errores.getInstance().push(new Error('semantico', this._linea, `No se puede asignar un Double a la variable Char.`));
                 return
             } else if (valor instanceof Boolean) {
-                Errores.getInstance().push(new Error('semantico', this._linea, `No se puede asignar un Boolean a la variable Char ${id}`));
+                Errores.getInstance().push(new Error('semantico', this._linea, `No se puede asignar un Boolean a la variable Char.`));
                 return
             } else if (valor instanceof Entero) {
                 let conv = String.fromCharCode(valor.valor_1);
@@ -101,7 +101,7 @@ export class Asignacion extends Instruccion {
                 //sin accion
             }
         } else {
-            Errores.getInstance().push(new Error('semantico', this._linea, `No se puede asignar un tipo diferente a la variable ${id}`));
+            Errores.getInstance().push(new Error('semantico', this._linea, `No se puede asignar un tipo diferente a la variable.`));
             return;
         }
 
