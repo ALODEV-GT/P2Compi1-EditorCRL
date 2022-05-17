@@ -112,7 +112,7 @@ export class FuncionalidadesComponent implements OnInit {
   ejecutar() {
     Salida.getInstance().clear();
     Errores.getInstance().clear();
-    ContenidoImagenes.getInstance().clear;
+    ContenidoImagenes.getInstance().clear();
     try {
       let raiz: NodoAST = myParser.parse(this.proyecto.contenido);
       let ejecucion: Ejecucion = new Ejecucion(raiz);
