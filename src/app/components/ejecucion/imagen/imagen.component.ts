@@ -7,7 +7,7 @@ import { graphviz } from 'd3-graphviz';
 })
 export class ImagenComponent implements OnInit {
 
-  @Input() contenidGraph: string = "a->b";
+  @Input() contenidGraph: string = "digraph{ a -> b }";
 
   constructor() { }
 
