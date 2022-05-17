@@ -31,13 +31,15 @@ export class LlamadaFuncion extends Instruccion {
 
         //Si existen parametros
         if (this.parametros.length > 0) {
+            
             if (!funcion.tieneParametros()) {
+                console.log("Llamada con parametros");
                 Errores.getInstance().push(new Error('semantico', this._linea, `La funcion ${this._id} no recibe parametros`));
                 return;
             }
-            //Si el numero de parametros es el mismo a al numero de argumentos
+            //Si el numero de parametros no es el mismo a al numero de argumentos
             if (this.parametros.length != funcion.parametros.length) {
-                Errores.getInstance().push(new Error('semantico', this._linea, `La funcion ${this._id} no esta declarada`));
+                Errores.getInstance().push(new Error('semantico', this._linea, `Se esperaba un numero diferente de parametros en la funcion ${this._id}`));
                 return;
             }
 
@@ -48,7 +50,7 @@ export class LlamadaFuncion extends Instruccion {
 
                 const valor = exp.ejecutar(entornoLocal); //Tipo Boolean,Caracter,Entero...
 
-                //Si el tipo del argumento es el mismo al del parametro
+                //Si el tipo del argumento no es el mismo al del parametro
                 if (valor != null && variable.tipo != valor.tipo) {
                     Errores.getInstance().push(new Error('semantico', this._linea, `El tipo del valor a enviar no es el mismo al parametro ${variable.id} de la funcion ${this._id}`));
                     return;

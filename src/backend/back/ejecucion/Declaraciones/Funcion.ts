@@ -23,7 +23,7 @@ export class Funcion {
     }
 
     tieneParametros(): boolean {
-        return this._parametros.length == 0 ? false : true;
+        return this.parametros == null? false : (this.parametros.length ==0) ? false: true; 
     }
 
     numParametros(): number {
