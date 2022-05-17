@@ -21,15 +21,23 @@ export class Incerteza extends Instruccion {
     ejecutar(e: Entorno) {
         const exp1 = this._expIzq.ejecutar(e);
         const exp2 = this._expDer.ejecutar(e);
+        let valIncerteza: number;
+        const variable = e.getVariable("incerteza");
+        if (!variable) {
+            valIncerteza = this._incertezaDafault;
+        } else {
+            let exp = variable.valor?.ejecutar(e);
+            valIncerteza = exp.valor_1;
+        }
 
         if (exp1 instanceof Boolean && exp2 instanceof Boolean) {
             Errores.getInstance().push(new Error("Semantico", this._linea, "No se puede realizar la incerteza entre Boolean"));
         } else if ((exp1 instanceof Decimal && exp2 instanceof Decimal) ||
-        (exp1 instanceof Decimal && exp2 instanceof Entero)) {
+            (exp1 instanceof Decimal && exp2 instanceof Entero)) {
             let valor1 = exp1.valor_1;
             let valor2 = exp2.valor_1;
             let resultado = false;
-            if (Math.abs(valor1 - valor2) <= this._incertezaDafault) {
+            if (Math.abs(valor1 - valor2) <= valIncerteza) {
                 resultado = true;
             }
             return new Boolean(resultado, this._linea);
@@ -42,11 +50,11 @@ export class Incerteza extends Instruccion {
 
             return new Boolean(resultado, this._linea);
         } else if ((exp1 instanceof Entero && exp2 instanceof Entero) ||
-        (exp1 instanceof Entero && exp2 instanceof Decimal)) {
+            (exp1 instanceof Entero && exp2 instanceof Decimal)) {
             let valor1 = exp1.valor_1;
             let valor2 = exp2.valor_1;
             let resultado = false;
-            if (Math.abs(valor1 - valor2) <= this._incertezaDafault) {
+            if (Math.abs(valor1 - valor2) <= valIncerteza) {
                 resultado = true;
             }
             return new Boolean(resultado, this._linea);
