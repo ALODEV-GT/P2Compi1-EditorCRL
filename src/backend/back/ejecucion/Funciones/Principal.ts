@@ -4,16 +4,19 @@ import { Instruccion } from '../Instruccion';
 import { Errores } from '../Errores/Errores';
 import { Error } from '../Errores/Error';
 import { Funcion } from '../Declaraciones/Funcion';
+import { NodoAST } from '../../arbol/NodoAST';
 export class Principal extends Instruccion {
     private _tipo: TiposNativos
     private _id: string;
     private _instrucciones: Array<Instruccion>;
+    private _nodo: NodoAST;
 
-    constructor(tipo: TiposNativos, id: string, instrucciones: Array<Instruccion>, linea: string) {
+    constructor(tipo: TiposNativos, id: string, instrucciones: Array<Instruccion>, linea: string, nodo: NodoAST) {
         super(linea);
         this._tipo = tipo;
         this._id = id;
         this._instrucciones = instrucciones
+        this._nodo = nodo;
     }
 
     ejecutar(e: Entorno) {
@@ -24,6 +27,6 @@ export class Principal extends Instruccion {
             return;
         }
 
-        e.setFuncion(new Funcion(this._id, this._instrucciones, this._tipo, []));
+        e.setFuncion(new Funcion(this._id, this._instrucciones, this._tipo, [], this._nodo));
     }
 }

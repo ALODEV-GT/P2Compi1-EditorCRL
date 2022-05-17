@@ -43,7 +43,7 @@ export class DeclaracionFuncion extends Instruccion {
             }
         }
 
-        e.setFuncion(new Funcion(this._id, this._instrucciones, this._tipo, this._parametros));
+        e.setFuncion(new Funcion(this._id, this._instrucciones, this._tipo, this._parametros, this._nodo));
     }
 
 }

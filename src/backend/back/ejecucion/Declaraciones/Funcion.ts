@@ -1,18 +1,21 @@
 import { Instruccion } from "../Instruccion"
 import { TiposNativos } from './TiposNativo';
 import { Variable } from "./Variable";
+import { NodoAST } from '../../arbol/NodoAST';
 
 export class Funcion {
     private _id: string;
     private _instrucciones: Array<Instruccion>;
     private _tipoReturn: TiposNativos;
     private _parametros: Array<Variable>;
+    private _nodo: NodoAST;
 
-    constructor(id: string, instrucciones: Array<Instruccion>, tipoReturn: TiposNativos, parametros: Array<Variable>) {
+    constructor(id: string, instrucciones: Array<Instruccion>, tipoReturn: TiposNativos, parametros: Array<Variable>, nodo: NodoAST) {
         this._id = id;
         this._instrucciones = instrucciones;
         this._tipoReturn = tipoReturn;
         this._parametros = parametros;
+        this._nodo = nodo;
     }
 
     tieneReturn(): boolean {
@@ -48,5 +51,9 @@ export class Funcion {
     }
     public get tipoReturn(): TiposNativos {
         return this._tipoReturn;
+    }
+
+    public get nodo(): NodoAST {
+        return this._nodo;
     }
 }

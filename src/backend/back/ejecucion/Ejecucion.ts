@@ -93,7 +93,7 @@ export class Ejecucion {
         }
 
         this.agregarEjecucionPrincipal(instrucciones);
-        
+
         const entorno = new Entorno();
         Salida.getInstance().clear();
         instrucciones.forEach((element: any) => {
@@ -448,7 +448,7 @@ export class Ejecucion {
             if (nodo.hijos.length == 6) {
                 instrucciones = this.recorrer(nodo.hijos[nodo.hijos.length - 1]);
             }
-            return new Principal(tipo, id, instrucciones, nodo.linea);
+            return new Principal(tipo, id, instrucciones, nodo.linea, nodo);
         }
 
         //RETORNO
