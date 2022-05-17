@@ -143,7 +143,30 @@ IMPORTAR
 ;
 
 INCERTEZA 
-	: incerteza decimal SALTOS
+	: incerteza decimal SALTOS		{let incertz = new Parser.yy.Nodo("INSTRUCCION","", yylineno); 
+									let decIncertz = new Parser.yy.Nodo("DECLARACION_VAR","",yylineno);
+									let tipoVar = new Parser.yy.Nodo("TIPO_VARIABLE_NATIVA","",yylineno);
+									tipoVar.agregarHijo(new Parser.yy.Nodo("Double","double",yylineno));
+									decIncertz.agregarHijo(tipoVar);
+									decIncertz.agregarHijo(new Parser.yy.Nodo("incerteza","id",yylineno));
+									decIncertz.agregarHijo(new Parser.yy.Nodo("=","asig",yylineno)); 
+									let expresion = new Parser.yy.Nodo("EXP","",yylineno);
+									expresion.agregarHijo(new Parser.yy.Nodo($2,"DECIMAL",yylineno));
+									decIncertz.agregarHijo(expresion);
+									incertz.agregarHijo(decIncertz); Parser.yy.LisIn.agregarNodo(incertz,0); 
+									contadorTabs=0;}
+	| incerteza entero SALTOS		{let incertz = new Parser.yy.Nodo("INSTRUCCION","", yylineno); 
+									let decIncertz = new Parser.yy.Nodo("DECLARACION_VAR","",yylineno);
+									let tipoVar = new Parser.yy.Nodo("TIPO_VARIABLE_NATIVA","",yylineno);
+									tipoVar.agregarHijo(new Parser.yy.Nodo("Double","double",yylineno));
+									decIncertz.agregarHijo(tipoVar);
+									decIncertz.agregarHijo(new Parser.yy.Nodo("incerteza","id",yylineno));
+									decIncertz.agregarHijo(new Parser.yy.Nodo("=","asig",yylineno)); 
+									let expresion = new Parser.yy.Nodo("EXP","",yylineno);
+									expresion.agregarHijo(new Parser.yy.Nodo($2,"DECIMAL",yylineno));
+									decIncertz.agregarHijo(expresion);
+									incertz.agregarHijo(decIncertz); Parser.yy.LisIn.agregarNodo(incertz,0); 
+									contadorTabs=0;}
 ;
 
 INSTRUCCIONES
