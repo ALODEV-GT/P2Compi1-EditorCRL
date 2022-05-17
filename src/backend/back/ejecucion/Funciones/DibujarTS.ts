@@ -1,5 +1,6 @@
 import { Entorno } from '../Entorno';
 import { Instruccion } from '../Instruccion';
+import { ContenidoImagenes } from '../ContenidoImagenes';
 export class DibujarTS extends Instruccion {
 
     constructor(linea: string) {
@@ -7,6 +8,7 @@ export class DibujarTS extends Instruccion {
     }
 
     ejecutar(e: Entorno) {
-        throw new Error('Method not implemented.');
+        ContenidoImagenes.getInstance().pushImgTs(e);
+        return
     }
 }

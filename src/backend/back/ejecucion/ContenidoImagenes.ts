@@ -1,4 +1,5 @@
 import { NodoAST } from '../arbol/NodoAST';
+import { Entorno } from './Entorno';
 export class ContenidoImagenes {
     private static instance: ContenidoImagenes;
     lista: String[];
@@ -14,6 +15,25 @@ export class ContenidoImagenes {
             ContenidoImagenes.instance = new ContenidoImagenes();
         }
         return ContenidoImagenes.instance;
+    }
+
+    public pushImgTs(e: Entorno) {
+        this.lista.push(this.getDotTs(e));
+    }
+
+    private getDotTs(e: Entorno): string {
+        this.grafica = 'digraph structs {node [shape=record]; struct3 [label="{{Nombre|Descripcion}';
+        if (e != null) {
+            this.generacionDotTs(e);
+        }
+        this.grafica += '}"];}';
+        return this.grafica;
+    }
+
+    private generacionDotTs(e: Entorno) {
+        for (let [key, value] of e.variables) {
+            this.grafica += `|{Variable ${value.id}|Tipo: ${value.getTipo()}}`
+        }
     }
 
     public push(linea: string): void {
@@ -34,7 +54,7 @@ export class ContenidoImagenes {
         this.lista = [];
     }
 
-    getDotFunAST(raiz: NodoAST): string {
+    private getDotFunAST(raiz: NodoAST): string {
         this.grafica = 'digraph{ rankdir=LR ';
         if (raiz != null) {
             this.generacionDotAST(raiz);
@@ -54,7 +74,7 @@ export class ContenidoImagenes {
         });
     }
 
-    getDot(raiz: NodoAST): string {
+    private getDot(raiz: NodoAST): string {
         this.grafica = 'digraph{node [style=rounded] ';
         if (raiz != null) {
             this.generacionDot(raiz);
