@@ -42,12 +42,9 @@ export class Incerteza extends Instruccion {
             }
             return new Boolean(resultado, this._linea);
         } else if (exp1 instanceof Cadena && exp2 instanceof Cadena) {
-            let valor1 = exp1.valor;
-            let valor2 = exp2.valor;
-            let resultado = false;
-
-            //Pendiente
-
+            let valor1 = exp1.valor.trim().toLowerCase();
+            let valor2 = exp2.valor.trim().toLowerCase();
+            let resultado = valor1 == valor2;
             return new Boolean(resultado, this._linea);
         } else if ((exp1 instanceof Entero && exp2 instanceof Entero) ||
             (exp1 instanceof Entero && exp2 instanceof Decimal)) {

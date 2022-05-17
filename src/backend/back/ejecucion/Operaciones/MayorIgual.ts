@@ -27,7 +27,7 @@ export class MayorIgual extends Instruccion {
             let resultado = valor1 >= valor2;
             return new Boolean(resultado, this._linea);
         } else if ((exp1 instanceof Decimal && exp2 instanceof Decimal) ||
-        (exp1 instanceof Decimal && exp2 instanceof Entero)) {
+            (exp1 instanceof Decimal && exp2 instanceof Entero)) {
             let valor1 = exp1.valor_1;
             let valor2 = exp2.valor_1;
             let resultado = valor1 >= valor2;
@@ -35,13 +35,10 @@ export class MayorIgual extends Instruccion {
         } else if (exp1 instanceof Cadena && exp2 instanceof Cadena) {
             let valor1 = exp1.valor;
             let valor2 = exp2.valor;
-            let resultado = false;
-
-            //Pendiente
-
+            let resultado = this.evaluarCadenas(valor1, valor2);
             return new Boolean(resultado, this._linea);
         } else if ((exp1 instanceof Entero && exp2 instanceof Entero) ||
-        (exp1 instanceof Entero && exp2 instanceof Decimal)) {
+            (exp1 instanceof Entero && exp2 instanceof Decimal)) {
             let valor1 = exp1.valor_1;
             let valor2 = exp2.valor_1;
             let resultado = valor1 >= valor2;
@@ -55,6 +52,30 @@ export class MayorIgual extends Instruccion {
             Errores.getInstance().push(new Error("Semantico", this._linea, "No se puede realizar la comparacion entre diferentes tipos"));
         }
         return
+    }
+
+    private evaluarCadenas(cad1: string, cad2: string): boolean {
+        let resultado: boolean = false;
+        let sumaCad1: number = 0;
+        let sumaCad2: number = 0;
+
+        for (let i = 0; i < cad1.length; i++) {
+            sumaCad1 += cad1.charCodeAt(i);
+        }
+
+        for (let i = 0; i < cad2.length; i++) {
+            sumaCad2 += cad2.charCodeAt(i);
+        }
+
+        if (sumaCad1 > sumaCad2) {
+            resultado = true;
+        }
+
+        if (!resultado) {
+            resultado = cad1 == cad2;
+        }
+
+        return resultado;
     }
 
 }
