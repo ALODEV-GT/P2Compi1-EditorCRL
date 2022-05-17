@@ -1,7 +1,6 @@
 import { NodoAST } from '../arbol/NodoAST';
 import { Entorno } from './Entorno';
 import { Instruccion } from './Instruccion';
-import { Entornos } from './Entornos';
 import { Salida } from './Salida';
 import { TiposNativos } from './Declaraciones/TiposNativo';
 import { Id } from './Valores/Id';
@@ -28,7 +27,6 @@ import { Incerteza } from './Operaciones/Incerteza';
 import { And } from './Operaciones/And';
 import { Or } from './Operaciones/Or';
 import { Xor } from './Operaciones/Xor';
-import { Parametro } from './Funciones/Parametro';
 import { DeclaracionFuncion } from './Funciones/DeclaracionFuncion';
 import { Principal } from './Funciones/Principal';
 import { Retorno } from './flujo/Retorno';
@@ -45,6 +43,8 @@ import { LlamadaFuncion } from './Funciones/LLamadaFuncion';
 import { InstruccionSi } from './Instrucciones/InstruccionSi';
 import { Si } from './Instrucciones/Si';
 import { Variable } from './Declaraciones/Variable';
+import { Errores } from 'src/backend/back/ejecucion/Errores/Errores';
+import { Error } from 'src/backend/back/ejecucion/Errores/Error';
 export class Ejecucion {
     _raiz: NodoAST;
     _contador: number = 0;
@@ -88,6 +88,14 @@ export class Ejecucion {
     ejecutar() {
         const instrucciones = this.recorrer(this._raiz);
         console.log(instrucciones);
+        if (this.validarInstruccionesPadre(instrucciones) || this.validacionFuncionPrincipal(instrucciones)) {
+            return;
+        }
+
+        this.agregarEjecucionPrincipal(instrucciones);
+        console.log("Despues de la validacion");
+        console.log(instrucciones);
+        
         const entorno = new Entorno();
         Salida.getInstance().clear();
         instrucciones.forEach((element: any) => {
@@ -101,6 +109,43 @@ export class Ejecucion {
         });
     }
 
+    validarInstruccionesPadre(instrucciones: Array<Instruccion>): boolean {
+        let errores: boolean = false;
+        for (let instruccion of instrucciones) {
+            if (!(instruccion instanceof DeclaracionFuncion || instruccion instanceof DeclaracionVar || instruccion instanceof Principal)) {
+                Errores.getInstance().push(new Error("Semantico", instruccion._linea, "Solo puedes declarar funciones, variables o la clase principal como instrucciones principales"));
+                errores = true;
+            }
+        }
+        return errores;
+    }
+
+    validacionFuncionPrincipal(instrucciones: Array<Instruccion>) {
+        let contador = 0;
+        for (let instruccion of instrucciones) {
+            if (instruccion instanceof Principal) {
+                contador++;
+                if (contador > 1) {
+                    Errores.getInstance().push(new Error("Semantico", instruccion._linea, "La funcion principal solo se puede declarar una vez"));
+                }
+            }
+        }
+
+        if (contador == 0) {
+            Errores.getInstance().push(new Error("Semantico", "--", "No se encontro la funcion Principal"));
+        }
+
+        return contador == 0 ? true : contador > 1 ? true : false;
+    }
+
+    agregarEjecucionPrincipal(instrucciones: Array<Instruccion>) {
+        //id par_a par_c
+        const id: string = "Principal";
+        let parametros: Instruccion[] = [];
+        let ejPrincipal = new LlamadaFuncion(id, parametros, "--");
+        instrucciones.push(ejPrincipal);
+    }
+
     recorrer(nodo: NodoAST): any {
         //INICIO
         if (nodo.valor == "INICIO") {
@@ -112,7 +157,7 @@ export class Ejecucion {
             let instrucciones: any[] = [];
             //Recorrer declaraciones de funciones y variables globales
             nodo.hijos.forEach((nodoHijo: NodoAST) => {
-                if (nodoHijo.valor == "DECLARACION_FUN") {
+                if (nodoHijo.hijos[0].valor == "DECLARACION_FUN") {
                     const inst = this.recorrer(nodoHijo);
                     if (inst instanceof Array) {
                         instrucciones = instrucciones.concat(inst);
@@ -124,7 +169,7 @@ export class Ejecucion {
 
             //Recorrido de otras instrucciones
             nodo.hijos.forEach((nodoHijo: NodoAST) => {
-                if (!(nodoHijo.valor == "DECLARACION_FUN")) {
+                if (!(nodoHijo.hijos[0].valor == "DECLARACION_FUN")) {
                     const inst = this.recorrer(nodoHijo);
                     if (inst instanceof Array) {
                         instrucciones = instrucciones.concat(inst);

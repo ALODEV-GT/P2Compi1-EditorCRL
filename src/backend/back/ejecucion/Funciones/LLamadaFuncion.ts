@@ -5,8 +5,6 @@ import { Error } from '../Errores/Error';
 import { Variable } from '../Declaraciones/Variable';
 import { EntornoAux } from '../EntornoAux';
 import { InsRetorno } from '../flujo/InsRetorno';
-import { Detener } from '../flujo/Detener';
-import { Continuar } from '../flujo/Continuar';
 import { InsDetener } from '../flujo/InsDetener';
 import { InsContinuar } from '../flujo/InsContinuar';
 export class LlamadaFuncion extends Instruccion {
