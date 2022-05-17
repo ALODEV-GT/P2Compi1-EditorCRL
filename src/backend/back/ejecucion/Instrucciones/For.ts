@@ -2,12 +2,12 @@ import { Asignacion } from '../Declaraciones/Asignacion';
 import { Entorno } from '../Entorno';
 import { Instruccion } from '../Instruccion';
 import { DeclaracionVar } from '../Declaraciones/DeclaracionVar';
-import { Retorno } from '../flujo/Retorno';
-import { Detener } from '../flujo/Detener';
-import { Continuar } from '../flujo/Continuar';
 import { Boolean } from '../Valores/Boolean';
 import { Errores } from '../Errores/Errores';
 import { Error } from '../Errores/Error';
+import { InsRetorno } from '../flujo/InsRetorno';
+import { InsDetener } from '../flujo/InsDetener';
+import { InsContinuar } from '../flujo/InsContinuar';
 export class For extends Instruccion {
     private _condicion: Instruccion;
     private _incremento: Instruccion;
@@ -50,15 +50,15 @@ export class For extends Instruccion {
             for (let instruccion of this._instrucciones) {
                 const resp = instruccion.ejecutar(entorno_for);
                 //Validacion de instruccion Return
-                if (resp instanceof Retorno) {
+                if (resp instanceof InsRetorno) {
                     return resp;
                 }
                 //Validacion de instrucion Break
-                if (resp instanceof Detener) {
+                if (resp instanceof InsDetener) {
                     return;
                 }
                 //Validacion instruccion Continue
-                if (resp instanceof Continuar) {
+                if (resp instanceof InsContinuar) {
                     break;
                 }
             }

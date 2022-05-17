@@ -3,9 +3,9 @@ import { Instruccion } from '../Instruccion';
 import { Boolean } from '../Valores/Boolean';
 import { Errores } from '../Errores/Errores';
 import { Error } from '../Errores/Error';
-import { Retorno } from '../flujo/Retorno';
-import { Detener } from '../flujo/Detener';
-import { Continuar } from '../flujo/Continuar';
+import { InsRetorno } from '../flujo/InsRetorno';
+import { InsDetener } from '../flujo/InsDetener';
+import { InsContinuar } from '../flujo/InsContinuar';
 export class Mientras extends Instruccion {
     private _condicion: Instruccion;
     private _instrucciones: Array<Instruccion>;
@@ -18,7 +18,7 @@ export class Mientras extends Instruccion {
 
     ejecutar(e: Entorno) {
         const condicion = this._condicion.ejecutar(e);
-        if(!(condicion instanceof Boolean)){
+        if (!(condicion instanceof Boolean)) {
             Errores.getInstance().push(new Error('semantico', this._linea, `Condicion invalida`));
             return;
         }
@@ -30,15 +30,15 @@ export class Mientras extends Instruccion {
             for (let instruccion of this._instrucciones) {
                 const resp = instruccion.ejecutar(entorno);
                 ///Validacion de instruccion Return
-                if (resp instanceof Retorno) {
+                if (resp instanceof InsRetorno) {
                     return resp;
                 }
                 //Validacion de instrucion Break
-                if (resp instanceof Detener) {
+                if (resp instanceof InsDetener) {
                     return;
                 }
                 //Validacion de instruccion Continue
-                if (resp instanceof Continuar) {
+                if (resp instanceof InsContinuar) {
                     break;
                 }
             }
