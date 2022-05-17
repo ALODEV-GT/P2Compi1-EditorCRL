@@ -7,6 +7,9 @@ import { Error } from 'src/backend/back/ejecucion/Errores/Error';
 import { Detener } from "../flujo/Detener";
 import { Continuar } from '../flujo/Continuar';
 import { Retorno } from "../flujo/Retorno";
+import { InsDetener } from "../flujo/InsDetener";
+import { InsContinuar } from '../flujo/InsContinuar';
+import { InsRetorno } from '../flujo/InsRetorno';
 export class InstruccionSi extends Instruccion {
     private _sis: Array<Si>;
 
@@ -27,7 +30,7 @@ export class InstruccionSi extends Instruccion {
                     for (let instruccion of instrucciones) {
                         const resp = instruccion.ejecutar(entorno);
                         //Validacion de sentencias Break, Continue o Return
-                        if (resp instanceof Detener || resp instanceof Continuar || resp instanceof Retorno) {
+                        if (resp instanceof InsDetener || resp instanceof InsContinuar || resp instanceof InsRetorno) {
                             return resp;
                         }
                     }
