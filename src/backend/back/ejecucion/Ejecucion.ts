@@ -93,8 +93,6 @@ export class Ejecucion {
         }
 
         this.agregarEjecucionPrincipal(instrucciones);
-        console.log("Despues de la validacion");
-        console.log(instrucciones);
         
         const entorno = new Entorno();
         Salida.getInstance().clear();

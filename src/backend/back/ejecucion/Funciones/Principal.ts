@@ -25,6 +25,5 @@ export class Principal extends Instruccion {
         }
 
         e.setFuncion(new Funcion(this._id, this._instrucciones, this._tipo, []));
-        console.log("Funcion principal declarada");
     }
 }
