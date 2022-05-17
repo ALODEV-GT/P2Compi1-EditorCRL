@@ -45,6 +45,7 @@ import { Si } from './Instrucciones/Si';
 import { Variable } from './Declaraciones/Variable';
 import { Errores } from 'src/backend/back/ejecucion/Errores/Errores';
 import { Error } from 'src/backend/back/ejecucion/Errores/Error';
+import { ContenidoImagenes } from './ContenidoImagenes';
 export class Ejecucion {
     _raiz: NodoAST;
     _contador: number = 0;

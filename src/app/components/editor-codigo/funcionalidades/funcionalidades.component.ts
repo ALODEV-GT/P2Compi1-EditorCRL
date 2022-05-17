@@ -9,6 +9,7 @@ import { Ejecucion } from '../../../../backend/back/ejecucion/Ejecucion';
 import { graphviz } from 'd3-graphviz';
 import { Salida } from 'src/backend/back/ejecucion/Salida';
 import { Errores } from 'src/backend/back/ejecucion/Errores/Errores';
+import { ContenidoImagenes } from '../../../../backend/back/ejecucion/ContenidoImagenes';
 
 declare var require: any;
 const myParser = require("./../../../../backend/back/analizador/grammar.js");
@@ -37,6 +38,7 @@ export class FuncionalidadesComponent implements OnInit {
 
   lista: any[] = [];
   listaErr: any[] = [];
+  contsImagenes: any[] = [];
 
   agregarVentana() {
     this.proyectos.push(new Proyecto("", this.contadorVentanas.contador));
@@ -110,6 +112,7 @@ export class FuncionalidadesComponent implements OnInit {
   ejecutar() {
     Salida.getInstance().clear();
     Errores.getInstance().clear();
+    ContenidoImagenes.getInstance().clear;
     try {
       let raiz: NodoAST = myParser.parse(this.proyecto.contenido);
       let ejecucion: Ejecucion = new Ejecucion(raiz);
@@ -123,6 +126,7 @@ export class FuncionalidadesComponent implements OnInit {
 
     this.lista = Salida.getInstance().lista;
     this.listaErr = Errores.getInstance().lista;
+    this.contsImagenes = ContenidoImagenes.getInstance().lista;
   }
 
 

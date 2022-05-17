@@ -4,6 +4,8 @@ import { TerminalComponent } from './terminal/terminal.component';
 import { ReporteErroresComponent } from './reporte-errores/reporte-errores.component';
 import { ImagenesComponent } from './imagenes/imagenes.component';
 import { EjecucionComponent } from './ejecucion/ejecucion.component';
+import { MaterialModule } from '../../material/material.module';
+import { ImagenComponent } from './imagen/imagen.component';
 
 
 
@@ -12,10 +14,12 @@ import { EjecucionComponent } from './ejecucion/ejecucion.component';
     TerminalComponent,
     ReporteErroresComponent,
     ImagenesComponent,
-    EjecucionComponent
+    EjecucionComponent,
+    ImagenComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    MaterialModule
   ],
   exports: [
     EjecucionComponent

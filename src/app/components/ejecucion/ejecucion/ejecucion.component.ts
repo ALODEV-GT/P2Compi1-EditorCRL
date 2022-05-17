@@ -13,6 +13,7 @@ export class EjecucionComponent implements OnInit {
   @Input() ventanaActiva!: ManejadorEjecucion;
   @Input() lista!: any[];
   @Input() listaErr!: any[];
+  @Input() contsImagenes!: any[];
   TERMINAL: number = 1;
   ERRORES: number = 2;
   IMAGENES: number = 3;

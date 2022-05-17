@@ -1,1 +1,7 @@
-<p>imagenes works!</p>
+<mat-tab-group mat-align-tabs="start">
+    <div *ngFor="let contImagen of contsImagenes; let i=index">
+        <mat-tab label="Imagen {{i+1}}">
+            <app-imagen [contenidGraph] ="contImagen"></app-imagen>
+        </mat-tab>
+    </div>
+</mat-tab-group>
