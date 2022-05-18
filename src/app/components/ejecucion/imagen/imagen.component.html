@@ -1,5 +1,21 @@
 <br>
-<button mat-raised-button color="accent" (click)="prueba()"> Ver imagen </button>
+<span class="sep">
+    <button mat-raised-button color="warn" (click)="prueba()"> Ver imagen </button>
+</span>
+<ng-container *ngIf="imagenVista === true;">
+    <span class="sep">
+        <button mat-raised-button color="primary" (click)="crearImagen()">Crear Imagen</button>
+    </span>
+</ng-container>
+
+<ng-container *ngIf="imgcreada === true;">
+    <span class="sep">
+        <a type="button" mat-raised-button color="accent" href="{{imagenCreada}}" download>
+            Descargar
+        </a>
+    </span>
+</ng-container>
+<br>
 <div style="text-align: center;">
     <div id="grafico"></div>
 </div>

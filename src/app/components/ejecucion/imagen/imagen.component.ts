@@ -10,14 +10,25 @@ export class ImagenComponent implements OnInit {
 
   @Input() contenidGraph: string = "digraph{ a -> b }";
 
+  imgcreada = false;
+  imagenCreada: any;
+  imagenVista = false;
   constructor() { }
 
   ngOnInit(): void {
 
   }
 
-  prueba(): void{
+  prueba(): void {
     graphviz('#grafico').renderDot(this.contenidGraph);
+    this.imagenVista = true;
+  }
+
+  crearImagen() {
+    html2canvas(document.querySelector("#grafico")!).then(canvas => {
+      this.imagenCreada = canvas.toDataURL();
+    });
+    this.imgcreada = true;
   }
 
 }
