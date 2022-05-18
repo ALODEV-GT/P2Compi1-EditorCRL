@@ -115,18 +115,27 @@ export class FuncionalidadesComponent implements OnInit {
     ContenidoImagenes.getInstance().clear();
     try {
       let raiz: NodoAST = myParser.parse(this.proyecto.contenido);
+      if (Errores.getInstance().hasErrors()) {
+        this.listaErr = Errores.getInstance().lista;
+        this.lista = []
+        return;
+      }
       let ejecucion: Ejecucion = new Ejecucion(raiz);
       // let str3: string = ejecucion.getDot();
       // graphviz('div').renderDot(str3);
       ejecucion.ejecutar();
       console.log('analizado y ejecutado');
     } catch (error) {
-      console.log('Ocurrio un error');
+      Errores.getInstance().push(new Error("grave", "--", "No se ha podido recuperar de este error"));
     }
 
-    this.lista = Salida.getInstance().lista;
+    if (!Errores.getInstance().hasErrors()) {
+      this.lista = Salida.getInstance().lista;
+      this.contsImagenes = ContenidoImagenes.getInstance().lista;
+    }else{
+      this.lista = []
+    }
     this.listaErr = Errores.getInstance().lista;
-    this.contsImagenes = ContenidoImagenes.getInstance().lista;
   }
 
 

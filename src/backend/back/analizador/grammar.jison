@@ -111,7 +111,7 @@
 S
 	: ENCABEZADO INSTRUCCIONES EOF 	{Parser.yy.Agrup.ordenar(Parser.yy.LisIn.raiz); var r = Parser.yy.Agrup.agruparArbol(Parser.yy.LisIn.raiz, yylineno); Parser.yy.LisIn.limpiar(); return r; }
 	| INSTRUCCIONES EOF				{Parser.yy.Agrup.ordenar(Parser.yy.LisIn.raiz); var r = Parser.yy.Agrup.agruparArbol(Parser.yy.LisIn.raiz, yylineno); Parser.yy.LisIn.limpiar(); return r; }
-	| SALTOS INSTRUCCION EOF		{Parser.yy.Agrup.ordenar(Parser.yy.LisIn.raiz); var r = Parser.yy.Agrup.agruparArbol(Parser.yy.LisIn.raiz, yylineno); Parser.yy.LisIn.limpiar(); return r; }
+	| SALTOS INSTRUCCIONES EOF		{Parser.yy.Agrup.ordenar(Parser.yy.LisIn.raiz); var r = Parser.yy.Agrup.agruparArbol(Parser.yy.LisIn.raiz, yylineno); Parser.yy.LisIn.limpiar(); return r; }
 ;
 
 ENCABEZADO
