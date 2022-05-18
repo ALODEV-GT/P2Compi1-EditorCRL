@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import html2canvas from "html2canvas";
 import { graphviz } from 'd3-graphviz';
 @Component({
   selector: 'app-imagen',
