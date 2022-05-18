@@ -84,7 +84,7 @@
 
 <<EOF>>                 return 'EOF'
 
-.                       {console.log("Error lexico"); Parser.yy.Err.push(new Parser.yy.InsErr("Lexico",yylloc.first_line," en la columna: " + yylloc.first_column + ". Valor: " + yytext + ". No pertenece al lenguaje")); }
+.                       {Parser.yy.Err.push(new Parser.yy.InsErr("Lexico",yylloc.first_line," en la columna: " + yylloc.first_column + ". Valor: " + yytext + ". No pertenece al lenguaje")); }
 /lex
 
 /*-------------------------SINTACTICO-------------------------*/
@@ -173,7 +173,8 @@ INSTRUCCIONES
 	: INSTRUCCIONES TABS INSTRUCCION 
 	| TABS INSTRUCCION
 	| INSTRUCCIONES INSTRUCCION
-	| INSTRUCCION 
+	| INSTRUCCION
+	| error SALTOS {Parser.yy.Err.push(new Parser.yy.InsErr("Sintactico",this._$.first_line," en la columna: " + this._$.first_column + ". Valor: " + yytext));} 
 ;
 
 INSTRUCCION
