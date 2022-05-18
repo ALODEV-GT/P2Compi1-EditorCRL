@@ -898,7 +898,7 @@ case 58:return 21
 break;
 case 59:return 6
 break;
-case 60:console.log("Error lexico"); Parser.yy.Err.push(new Parser.yy.InsErr("Lexico",yy_.yylloc.first_line,", en la columna: " + yy_.yylloc.first_column + ".Valor: " + yy_.yytext + ". No pertenece al lenguaje")); 
+case 60:console.log("Error lexico"); Parser.yy.Err.push(new Parser.yy.InsErr("Lexico",yy_.yylloc.first_line," en la columna: " + yy_.yylloc.first_column + ". Valor: " + yy_.yytext + ". No pertenece al lenguaje")); 
 break;
 }
 },

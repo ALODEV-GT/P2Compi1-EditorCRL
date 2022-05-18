@@ -84,7 +84,7 @@
 
 <<EOF>>                 return 'EOF'
 
-.                       {console.log("Error lexico"); Parser.yy.Err.push(new Parser.yy.InsErr("Lexico",yylloc.first_line,", en la columna: " + yylloc.first_column + ".Valor: " + yytext + ". No pertenece al lenguaje")); }
+.                       {console.log("Error lexico"); Parser.yy.Err.push(new Parser.yy.InsErr("Lexico",yylloc.first_line," en la columna: " + yylloc.first_column + ". Valor: " + yytext + ". No pertenece al lenguaje")); }
 /lex
 
 /*-------------------------SINTACTICO-------------------------*/
