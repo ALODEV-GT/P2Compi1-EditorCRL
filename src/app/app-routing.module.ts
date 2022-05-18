@@ -14,7 +14,7 @@ const routes: Routes = [
   },
   {
     path: '**', //Cualquier otra pagina que no existe.
-    redirectTo: '404'
+    redirectTo: 'principal'
   }
 ];
 
