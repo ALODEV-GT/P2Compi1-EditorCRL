@@ -117,6 +117,7 @@ export class FuncionalidadesComponent implements OnInit {
       let raiz: NodoAST = myParser.parse(this.proyecto.contenido);
       if (Errores.getInstance().hasErrors()) {
         this.listaErr = Errores.getInstance().lista;
+        listaInstrucciones.limpiar();
         this.lista = []
         return;
       }
