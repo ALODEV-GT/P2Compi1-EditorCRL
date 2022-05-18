@@ -23,7 +23,6 @@ export class Char extends Instruccion {
     }
 
     public get valor(): string {
-        //Si es un numero devolver su caracter equivalente
         return this._valor;
     }
 

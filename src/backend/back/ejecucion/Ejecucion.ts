@@ -110,7 +110,7 @@ export class Ejecucion {
     validarInstruccionesPadre(instrucciones: Array<Instruccion>): boolean {
         let errores: boolean = false;
         for (let instruccion of instrucciones) {
-            if (!(instruccion instanceof DeclaracionFuncion || instruccion instanceof DeclaracionVar || instruccion instanceof Principal)) {
+            if (!(instruccion instanceof DeclaracionFuncion || instruccion instanceof DeclaracionVar || instruccion instanceof Principal || instruccion instanceof Asignacion)) {
                 Errores.getInstance().push(new Error("Semantico", instruccion._linea, "Solo puedes declarar funciones, variables o la clase principal como instrucciones principales"));
                 errores = true;
             }

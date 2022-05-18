@@ -1,5 +1,11 @@
 import { NodoAST } from '../arbol/NodoAST';
 import { Entorno } from './Entorno';
+import { Decimal } from './Valores/Decimal';
+import { Cadena } from './Valores/Cadena';
+import { Char } from './Valores/Char';
+import { Entero } from './Valores/Entero';
+import { Boolean } from './Valores/Boolean';
+import { Id } from './Valores/Id';
 export class ContenidoImagenes {
     private static instance: ContenidoImagenes;
     lista: String[];
@@ -22,7 +28,7 @@ export class ContenidoImagenes {
     }
 
     private getDotTs(e: Entorno): string {
-        this.grafica = 'digraph structs {node [shape=record]; struct3 [label="{{Nombre|Descripcion}';
+        this.grafica = 'digraph structs {node [shape=record]; struct3 [label="{{Variable|Descripcion}';
         if (e != null) {
             this.generacionDotTs(e);
         }
@@ -32,7 +38,25 @@ export class ContenidoImagenes {
 
     private generacionDotTs(e: Entorno) {
         for (let [key, value] of e.variables) {
-            this.grafica += `|{Variable ${value.id}|Tipo: ${value.getTipo()}}`
+            let valor = "null"
+            let linea = "--"
+            if (!(value.valor == null)) {
+                let ins = value.valor.ejecutar(e);
+                if (ins instanceof Cadena || ins instanceof Char) {
+                    valor = ins.valor;
+                    linea = ins._linea;
+                } else if (ins instanceof Entero || ins instanceof Decimal) {
+                    valor = ins.valor_1.toString();
+                    linea = ins._linea;
+                } else if (ins instanceof Boolean) {
+                    valor = ins.valorString();
+                    linea = ins._linea;
+                } else if (ins instanceof Id) {
+                    valor = ins.id;
+                    linea = ins._linea;
+                }
+            }
+            this.grafica += `|{${value.id}| Valor: ${valor}, Linea: ${linea}, Tipo: ${value.getTipo()}}`
         }
     }
 
