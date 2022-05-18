@@ -84,7 +84,7 @@
 
 <<EOF>>                 return 'EOF'
 
-.                       { console.error('Este es un error léxico: ' + yytext + ', en la linea: ' + yylloc.first_line + ', en la columna: ' + yylloc.first_column); }
+.                       {console.log("Error lexico"); Parser.yy.Err.push(new Parser.yy.InsErr("Lexico",yylloc.first_line,", en la columna: " + yylloc.first_column + ".Valor: " + yytext + ". No pertenece al lenguaje")); }
 /lex
 
 /*-------------------------SINTACTICO-------------------------*/

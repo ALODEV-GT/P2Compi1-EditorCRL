@@ -101,7 +101,7 @@ export class Ejecucion {
                 try {
                     element.ejecutar(entorno);
                 } catch (error) {
-                    console.log("Error al ejecutar");
+                    Errores.getInstance().push(new Error("de ejecucion", "--", "Error al ejecutar"));
                 }
             }
         });

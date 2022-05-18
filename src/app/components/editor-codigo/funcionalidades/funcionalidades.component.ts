@@ -6,16 +6,17 @@ import { NodoAST } from '../../../../backend/back/arbol/NodoAST';
 import { Lista } from '../../../../backend/back/ListaEnlazada/Lista';
 import { Agrupador } from '../../../../backend/back/ListaEnlazada/Agrupador';
 import { Ejecucion } from '../../../../backend/back/ejecucion/Ejecucion';
-import { graphviz } from 'd3-graphviz';
 import { Salida } from 'src/backend/back/ejecucion/Salida';
 import { Errores } from 'src/backend/back/ejecucion/Errores/Errores';
+import { Error } from 'src/backend/back/ejecucion/Errores/Error';
 import { ContenidoImagenes } from '../../../../backend/back/ejecucion/ContenidoImagenes';
 
 declare var require: any;
 const myParser = require("./../../../../backend/back/analizador/grammar.js");
 let listaInstrucciones: Lista = new Lista();
 let agrupador: Agrupador = new Agrupador();
-myParser.Parser.yy = { Nodo: NodoAST, LisIn: listaInstrucciones, Agrup: agrupador };
+let errores: Errores = Errores.getInstance();
+myParser.Parser.yy = { Nodo: NodoAST, LisIn: listaInstrucciones, Agrup: agrupador, Err: errores, InsErr: Error };
 
 @Component({
   selector: 'app-funcionalidades',
@@ -25,7 +26,6 @@ myParser.Parser.yy = { Nodo: NodoAST, LisIn: listaInstrucciones, Agrup: agrupado
 export class FuncionalidadesComponent implements OnInit {
 
   constructor() { }
-
   ngOnInit(): void {
   }
 
