@@ -1,0 +1,19 @@
+Void Principal():
+	usoDetener()
+	usoContinuar()
+
+Void usoDetener():
+	Mostrar("-----------Uso de detener-----------")
+	Para(Int i = 0; i < 100; ++):
+		Mostrar("-> " + i)
+		Si(i == 10):
+			Detener
+
+Void usoContinuar():
+	Mostrar("-----------Uso de Continuar-----------")
+	Int i = 0
+	Mientras(i < 10):
+		i = i + 1
+		Si(i == 4):
+			Continuar
+		Mostrar("-> " + i)

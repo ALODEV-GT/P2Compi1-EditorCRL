@@ -1,0 +1,8 @@
+Void Principal():
+	String nombre = "Brayan"
+	Double d = 3.16
+	Boolean vivo = true
+	Int edad = 21
+	Char caract = 113
+	DibujarTS()
+

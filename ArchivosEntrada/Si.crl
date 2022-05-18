@@ -1,0 +1,43 @@
+Void Principal():
+	Mostrar("-----------Dias de la semana-----------: ")
+	Para(Int i = 1; i < 7; ++):
+		Mostrar(obtenerDia(i))
+	Mostrar("---------- Si anidado --------------")
+	siAnidado("azul",1,2)
+	siAnidado("amarillo",1,3)
+	siAnidado("verde",5,7)
+	siAnidado("celeste",5,5)
+	siAnidado("rojo",5,3)
+
+String obtenerDia(Int numDia):
+	Si(numDia == 1):
+		Retorno "lunes"
+	Si(numDia == 2):
+		Retorno "martes"
+	Si(numDia == 3):
+		Retorno "miercoles"
+	Si(numDia == 4):
+		Retorno "jueves"
+	Si(numDia == 5):
+		Retorno "viernes"
+	Si(numDia > 5):
+		Retorno "no es un dia entre semana"
+
+Void siAnidado(String color, Int n, Int m):
+	Si(n == 1):
+		Si(m == 2):
+			Mostrar("Si->Si: " + color)
+		Sino:
+			Mostrar("Si->Sino: " + color)
+	Sino:
+		Si(m > n):
+			Mostrar("Sino->Si: " + color)
+		Sino:
+			Si(m == n):
+				Mostrar("Sino->Sino->Si: " + color)
+			Sino:
+				Mostrar("Sino->Sino->Sino: " + color)
+
+
+
+

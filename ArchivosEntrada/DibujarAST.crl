@@ -1,0 +1,21 @@
+!!Prueba DibujarAST
+Double Factorial(Double n):
+	Si(n <= 0):
+		Mostrar("hola mundo")
+		Retorno 1
+	Sino:
+		Int numero
+		DibujarTS()
+	Double res = n * Factorial(n-1)
+	Para(Int i = 0; i < 5; ++):
+		Mostrar("soy el for")
+		Mientras(5<3):
+			String nickname = "midik"
+			Int anios = 21
+			Mostrar(nickname + " " + anios)
+			Void Principal():
+	Retorno res
+
+Void Principal():
+	DibujarAST(Factorial)
+	Mostrar("Dibujo generado")

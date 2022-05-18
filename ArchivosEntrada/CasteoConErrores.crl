@@ -1,0 +1,227 @@
+''' 
+Este archivo muestra
+los casteos NO permitidos
+en el lenguaje CRL
+'''
+Void Principal():
+    !!SUMA
+	Mostrar(true + true)
+	Mostrar(true + 5.64)
+	Mostrar(false + "hola")
+	Mostrar(true + 2)
+	Mostrar(true + 'a')
+
+	Mostrar(5.32 + true)
+	Mostrar(5.32 + 5.64)
+	Mostrar(5.32 + "hola")
+	Mostrar(5.32 + 2)
+	Mostrar(5.32 + 'a')
+
+	Mostrar("-> " + false)
+	Mostrar("-> " + 5.64)
+	Mostrar("-> " + "hola")
+	Mostrar("-> " + 2)
+	Mostrar("-> " + 'a')
+
+	Mostrar(15 + true)
+	Mostrar(15 + 5.64)
+	Mostrar(15 + "hola")
+	Mostrar(15 + 2)
+	Mostrar(15 + 'a')
+
+	Mostrar('a'+ false)
+	Mostrar('a'+ 5.64)
+	Mostrar('a'+ "hola")
+	Mostrar('a'+ 2)
+	Mostrar('a'+ 'a')
+
+!!RESTA
+	Mostrar(true - true)
+	Mostrar(true - 5.64)
+	Mostrar(false - "hola")
+	Mostrar(true - 2)
+	Mostrar(true - 'a')
+
+	Mostrar(5.32 - true)
+	Mostrar(5.32 - 5.64)
+	Mostrar(5.32 - "hola")
+	Mostrar(5.32 - 2)
+	Mostrar(5.32 - 'a')
+
+	Mostrar("-> " - false)
+	Mostrar("-> " - 5.64)
+	Mostrar("-> " - "hola")
+	Mostrar("-> " - 2)
+	Mostrar("-> " - 'a')
+
+	Mostrar(15 - true)
+	Mostrar(15 - 5.64)
+	Mostrar(15 - "hola")
+	Mostrar(15 - 2)
+	Mostrar(15 - 'a')
+
+	Mostrar('a'- false)
+	Mostrar('a'- 5.64)
+	Mostrar('a'- "hola")
+	Mostrar('a'- 2)
+	Mostrar('a'- 'a')
+
+!!MULTIPLICACION
+	Mostrar(true * true)
+	Mostrar(true * 5.64)
+	Mostrar(false * "hola")
+	Mostrar(true * 2)
+	Mostrar(true * 'a')
+
+	Mostrar(5.32 * true)
+	Mostrar(5.32 * 5.64)
+	Mostrar(5.32 * "hola")
+	Mostrar(5.32 * 2)
+	Mostrar(5.32 * 'a')
+
+	Mostrar("-> " * false)
+	Mostrar("-> " * 5.64)
+	Mostrar("-> " * "hola")
+	Mostrar("-> " * 2)
+	Mostrar("-> " * 'a')
+
+	Mostrar(15 * true)
+	Mostrar(15 * 5.64)
+	Mostrar(15 * "hola")
+	Mostrar(15 * 2)
+	Mostrar(15 * 'a')
+
+	Mostrar('a'* false)
+	Mostrar('a'* 5.64)
+	Mostrar('a'* "hola")
+	Mostrar('a'* 2)
+	Mostrar('a'* 'a')
+
+!!DIVISION
+	Mostrar(true / true)
+	Mostrar(true / 5.64)
+	Mostrar(false / "hola")
+	Mostrar(true / 2)
+	Mostrar(true / 'a')
+
+	Mostrar(5.32 / true)
+	Mostrar(5.32 / 5.64)
+	Mostrar(5.32 / "hola")
+	Mostrar(5.32 / 2)
+	Mostrar(5.32 / 'a')
+
+	Mostrar("-> " / false)
+	Mostrar("-> " / 5.64)
+	Mostrar("-> " / "hola")
+	Mostrar("-> " / 2)
+	Mostrar("-> " / 'a')
+
+	Mostrar(15 / true)
+	Mostrar(15 / 5.64)
+	Mostrar(15 / "hola")
+	Mostrar(15 / 2)
+	Mostrar(15 / 'a')
+
+	Mostrar('a'/ false)
+	Mostrar('a'/ 5.64)
+	Mostrar('a'/ "hola")
+	Mostrar('a'/ 2)
+	Mostrar('a'/ 'a')
+
+!!DIVISION
+	Mostrar(true % true)
+	Mostrar(true % 5.64)
+	Mostrar(false % "hola")
+	Mostrar(true % 2)
+	Mostrar(true % 'a')
+
+	Mostrar(5.32 % true)
+	Mostrar(5.32 % 5.64)
+	Mostrar(5.32 % "hola")
+	Mostrar(5.32 % 2)
+	Mostrar(5.32 % 'a')
+
+	Mostrar("-> " % false)
+	Mostrar("-> " % 5.64)
+	Mostrar("-> " % "hola")
+	Mostrar("-> " % 2)
+	Mostrar("-> " % 'a')
+
+	Mostrar(15 % true)
+	Mostrar(15 % 5.64)
+	Mostrar(15 % "hola")
+	Mostrar(15 % 2)
+	Mostrar(15 % 'a')
+
+	Mostrar('a'% false)
+	Mostrar('a'% 5.64)
+	Mostrar('a'% "hola")
+	Mostrar('a'% 2)
+	Mostrar('a'% 'a')
+
+!!Igualdad (==)
+	Mostrar(true == false)
+	Mostrar(5.65 == 5.65)
+	Mostrar("hola" == "siuu")
+	Mostrar(6 == 7)
+	Mostrar('a' == 'a')
+
+!!Desigualdad (!=)
+	Mostrar(true != false)
+	Mostrar(5.65 != 5.65)
+	Mostrar("hola" != "siuu")
+	Mostrar(6 != 7)
+	Mostrar('a' != 'a')
+
+!!Menor (<)
+	Mostrar(true < false)
+	Mostrar(5.65 < 5.66)
+	Mostrar("hola" < "siuu")
+	Mostrar(6 < 7)
+	Mostrar('a' < 'b')
+
+!!Mayor(>)
+	Mostrar(true > false)
+	Mostrar(5.65 > 5.66)
+	Mostrar("hola" > "siuu")
+	Mostrar(6 > 7)
+	Mostrar('a' > 'b')
+
+!!Menor igual (<=)
+	Mostrar(false <= true)
+	Mostrar(5.65 <= 5.66)
+	Mostrar("hola" <= "siuu")
+	Mostrar(6 <= 7)
+	Mostrar('a' <= 'b')
+
+!!Mayor igual (>=)
+	Mostrar(true >= false)
+	Mostrar(5.65 >= 5.66)
+	Mostrar("hola" >= "siuu")
+	Mostrar(6 >= 7)
+	Mostrar('a' >= 'b')
+
+!!Incerteza (~)
+	Mostrar(true ~ false)
+	Mostrar(5.65 ~ 5.66)
+	Mostrar("hola" ~ "siuu")
+	Mostrar(6 ~ 7)
+	Mostrar('a' ~ 'b')
+
+!!And (&&)
+	Mostrar((5<3)&&(5<3))
+	Mostrar((5<3)&&(5>3))
+	Mostrar((5>3)&&(5<3))
+	Mostrar((5>3)&&(5>3))
+
+!!Or (||)
+	Mostrar((5<3)||(5<3))
+	Mostrar((5<3)||(5>3))
+	Mostrar((5>3)||(5<3))
+	Mostrar((5>3)||(5>3))
+
+!!Xor (|&)
+	Mostrar((5<3)|&(5<3))
+	Mostrar((5<3)|&(5>3))
+	Mostrar((5>3)|&(5<3))
+	Mostrar((5>3)|&(5>3))

@@ -1,0 +1,36 @@
+!!Entrada prueba Para, tambien se uso la instruccion Detener
+Void Principal():
+	contadorInc()
+	contadorDec()
+	mientrasAnidado()
+
+Void contadorInc():
+	Mostrar("Mientras con incremento")
+	Int i = 0
+	Mientras( i < 10):
+		Mostrar("-> " + i)
+		Si(i==4):
+			Detener
+		i = i + 1
+
+Void contadorDec():
+	Mostrar("Mientras con decremento")
+	Int i = 10
+	Mientras(i > 0):
+		Mostrar("-> " + i)
+		Si(i==4):
+			Detener
+		i = i - 1
+
+!!Recorrido indices matriz
+Void mientrasAnidado():
+	Mostrar("Mientras anidado, recorriedon indices de matriz")
+	Int i,j = 0
+	Mientras(i < 5):
+		j = 0
+		Mientras(j < 5):
+			Mostrar("[ " + i + " , " + j + " ]")
+			j = j + 1
+		i = i + 1
+
+

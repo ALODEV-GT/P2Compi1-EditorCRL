@@ -1,0 +1,40 @@
+!!Declaracion de incerteza
+Incerteza 0.6
+'''
+Este es un codigo
+donde se prueba:
+-Uso correcto de la Sangria como identacion
+-Declaracion de incerteza
+-Comentarios en el codigo
+-Uso de variables globales y locales
+-Declaracion de funciones
+-Declaracion de metodos
+-Funcion principal
+-Sentencia mostrar
+todo el lenguaje
+'''
+
+!!!Uso de variables (Boolean, double, String, Int y char) Globales y locales
+Boolean bol = true
+Double dou = 15.6
+String str = "hola"
+Int entero = 7
+Char caracter = 'a'
+
+Void Principal():
+	String m = "mundo"
+	Mostrar("Variable global str: " + str)
+	Mostrar("Variable local m: " + m)
+    !!Llamada a metodo
+	sumaMetodo(5,9)
+    !!Llamada a funcion
+	Mostrar("Resultado funcion sumaFuncion: " + sumaFuncion(15,20))
+    
+    
+!!Declaracion de funciones y metodos
+
+Int sumaFuncion(Int num1, Int num2):
+	Retorno num1 + num2
+
+Void sumaMetodo(Int num1,Int num2):
+	Mostrar("La suma de " + num1 + " + " + num2 + " es: " + (num1+num2))

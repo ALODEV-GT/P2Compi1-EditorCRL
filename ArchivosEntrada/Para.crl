@@ -1,0 +1,29 @@
+!!Entrada prueba Para, tambien se uso la instruccion Detener
+Void Principal():
+	contadorInc()
+	contadorDec()
+	paraAnidado()
+
+Void contadorInc():
+	Mostrar("Para con incremento")
+	Para(Int i = 0; i < 10; ++):
+		Mostrar("-> " + i)
+		Si(i==4):
+			Detener
+
+Void contadorDec():
+	Mostrar("Para con decremento")
+	Para(Int i = 10; i > 0; --):
+		Mostrar("-> " + i)
+		Si(i==4):
+			Detener
+
+!!Recorrido indices matriz
+Void paraAnidado():
+	Mostrar("Para anidado, recorriedon indices de matriz")
+	Para(Int i = 0; i < 5; ++):
+		Para(Int j = 0; j < 5; ++):
+			Mostrar("[ " + i + " , " + j + " ]")
+
+
+
